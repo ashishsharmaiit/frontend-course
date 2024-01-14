@@ -1,0 +1,19 @@
+/* BookViewNew.css */
+
+
+  
+  /* Add styles for the list of chapters if needed */
+  ul {
+    padding: 10px;
+    list-style: none; /* Optional: Removes the default list bullets */
+  }
+
+  ul li {
+    padding: 4vh 0; /* Add padding above and below each list item */
+    /* You can adjust the 10px value to increase or decrease the padding */
+  }
+  
+  .first-chapter h2 {
+    text-align: center;
+  }
+  

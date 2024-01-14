@@ -1,0 +1,12 @@
+
+.book-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 45vh; /* Add some spacing above the heading */
+    margin-bottom: 45vh; /* Add some spacing above the heading */
+
+
+  }

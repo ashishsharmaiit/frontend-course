@@ -1,0 +1,15 @@
+/* TextBox.css */
+.text-container textarea {
+    font-size: 12px;
+    text-align: left; /* Align text to the left */
+    resize: none; /* Optional: Disable resizing if you want */
+    width: 100%; /* Adjust width as needed */
+}
+
+.text-container {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    display: flex;
+    justify-content: center; /* Center the textarea horizontally */
+    width: 90%; /* Adjust the width of the container as needed */
+}

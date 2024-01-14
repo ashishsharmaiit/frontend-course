@@ -1,0 +1,16 @@
+/* Button.css */
+.buttonClass {
+    display: flex;        /* Enable Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically (if needed) */
+    width: 100%;             /* Take the full width of the container */
+    height: auto;            /* Height can be auto or as needed */
+}
+
+.buttonClass button {
+    /* Button specific styles */
+    padding: 10px 20px; /* Example padding */
+    font-size: 16px;    /* Example font size */
+    height: 40px;
+    /* Add other button styles here */
+}

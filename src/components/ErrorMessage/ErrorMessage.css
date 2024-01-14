@@ -1,0 +1,28 @@
+/* ErrorComponent.css */
+.error-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    padding: 10px;
+    background-color: #ffcccc; /* Light red background */
+    border: 1px solid red; /* Red border */
+    border-radius: 5px; /* Rounded corners */
+    margin: 10px 0; /* Some margin */
+}
+
+.error-symbol {
+    font-weight: bold;
+    color: red;
+    border: 1px solid red;
+    border-radius: 50%; /* Makes it circular */
+    width: 25px; /* Width of the circle */
+    height: 25px; /* Height of the circle */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-right: 10px; /* Space between the symbol and the message */
+}
+
+.error-message {
+    color: red;
+    /* Additional styling for the message */
+}

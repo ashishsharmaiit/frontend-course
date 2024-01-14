@@ -1,0 +1,7 @@
+/* index.css or Logo.css */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the start (top) of the container */
+    height: auto; /* Full viewport height */
+}

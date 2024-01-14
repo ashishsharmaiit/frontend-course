@@ -1,0 +1,15 @@
+/* HomePage.css */
+.componentStyle {
+    padding-top: 30px; /* No quotes around the value */
+}
+
+.select-container {
+    display: flex;
+    justify-content: center; /* Centers the container horizontally */
+    gap: 10px; /* Space between the two selects */
+  }
+  
+  .select-container > Form.Select {
+    padding: 0 10px; /* Optional: Adjust padding as needed */
+  }
+  

@@ -1,0 +1,25 @@
+/* SearchBar.css */
+.search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    padding: 5px;
+    flex-grow: 1; /* Makes input grow to fill available space */
+}
+
+.search-bar button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.search-icon {
+    border: none;
+}
