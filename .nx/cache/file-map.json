@@ -1,0 +1,250 @@
+{
+  "version": "6.0",
+  "nxVersion": "17.2.8",
+  "deps": {
+    "axios": "^1.6.3",
+    "bootstrap": "^5.3.2",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.9.2",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "nx": "17.2.8"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "react-app": [
+        {
+          "file": "README.md",
+          "hash": "4055606894390288348"
+        },
+        {
+          "file": "dist/Chapter10Logo.png",
+          "hash": "10301520188915848632"
+        },
+        {
+          "file": "dist/assets/Chapter10Logo-uBXYMgha.png",
+          "hash": "10301520188915848632"
+        },
+        {
+          "file": "dist/assets/index-3O62ZE6S.css",
+          "hash": "5648800698024259292"
+        },
+        {
+          "file": "dist/assets/index-yYucUsVB.js",
+          "hash": "14678555135234955708"
+        },
+        {
+          "file": "dist/index.html",
+          "hash": "8861475647936343880"
+        },
+        {
+          "file": "index.html",
+          "hash": "10688712881608615553"
+        },
+        {
+          "file": "nx.json",
+          "hash": "15019939696447820903"
+        },
+        {
+          "file": "package-lock.json",
+          "hash": "12912261481145092910"
+        },
+        {
+          "file": "package.json",
+          "hash": "10306955154603529855",
+          "deps": [
+            "npm:axios",
+            "npm:bootstrap",
+            "npm:react",
+            "npm:react-bootstrap",
+            "npm:react-dom",
+            "npm:react-router-dom",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:@vitejs/plugin-react",
+            "npm:eslint",
+            "npm:eslint-plugin-react-hooks",
+            "npm:eslint-plugin-react-refresh",
+            "npm:typescript",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "public/Chapter10Logo.png",
+          "hash": "10301520188915848632"
+        },
+        {
+          "file": "src/assets/Chapter10Logo.png",
+          "hash": "10301520188915848632"
+        },
+        {
+          "file": "src/components/Button/Button.css",
+          "hash": "10715726371517045785"
+        },
+        {
+          "file": "src/components/Button/Button.tsx",
+          "hash": "5608313017753280774"
+        },
+        {
+          "file": "src/components/ErrorMessage/ErrorMessage.css",
+          "hash": "10008563824885911155"
+        },
+        {
+          "file": "src/components/ErrorMessage/ErrorMessage.tsx",
+          "hash": "4625090437074248520"
+        },
+        {
+          "file": "src/components/Logo/Logo.css",
+          "hash": "10428928491898371475"
+        },
+        {
+          "file": "src/components/Logo/Logo.tsx",
+          "hash": "3902095863510938137"
+        },
+        {
+          "file": "src/components/SearchBar_UnUsed/SearchBar.css",
+          "hash": "1315279954248841316"
+        },
+        {
+          "file": "src/components/SearchBar_UnUsed/SearchBar.tsx",
+          "hash": "15280509755342319313"
+        },
+        {
+          "file": "src/components/Text/Text.tsx",
+          "hash": "9807764185886451231"
+        },
+        {
+          "file": "src/components/TextBox/TextBox.css",
+          "hash": "10438620646744446858"
+        },
+        {
+          "file": "src/components/TextBox/TextBox.tsx",
+          "hash": "654579108630628679"
+        },
+        {
+          "file": "src/config.ts",
+          "hash": "18446465297269373682"
+        },
+        {
+          "file": "src/hooks/context/UserContext.tsx",
+          "hash": "2529880859617464294"
+        },
+        {
+          "file": "src/hooks/useFetchCourse.ts",
+          "hash": "11839856157894022793"
+        },
+        {
+          "file": "src/hooks/useIncreaseScrollLength.ts",
+          "hash": "5062731679648126884"
+        },
+        {
+          "file": "src/hooks/validateTextBox.ts",
+          "hash": "8031213846413694370"
+        },
+        {
+          "file": "src/main.tsx",
+          "hash": "6158506949745403633"
+        },
+        {
+          "file": "src/pages/BookViewNew/BookViewNew.css",
+          "hash": "1410355603286476664"
+        },
+        {
+          "file": "src/pages/BookViewNew/BookViewNew.tsx",
+          "hash": "15514739252463026556"
+        },
+        {
+          "file": "src/pages/BookViewNew/components/BookName/BookName.css",
+          "hash": "17538675694667499150"
+        },
+        {
+          "file": "src/pages/BookViewNew/components/BookName/BookName.tsx",
+          "hash": "14286947993888263386"
+        },
+        {
+          "file": "src/pages/BookViewNew/components/ChapterNew/ChapterNew.tsx",
+          "hash": "7185722435515634662"
+        },
+        {
+          "file": "src/pages/BookViewNew/components/TableOfContent/TableOfContent.css",
+          "hash": "1179330890856349594"
+        },
+        {
+          "file": "src/pages/BookViewNew/components/TableOfContent/TableOfContent.tsx",
+          "hash": "12213231755468496959"
+        },
+        {
+          "file": "src/pages/CourseFinalization/CourseFinalization.tsx",
+          "hash": "4836106312514825361"
+        },
+        {
+          "file": "src/pages/CourseFinalization/components/BookCardList/BookCard/BookCard.css",
+          "hash": "7219206581272108164"
+        },
+        {
+          "file": "src/pages/CourseFinalization/components/BookCardList/BookCard/BookCard.tsx",
+          "hash": "11255157165485324319"
+        },
+        {
+          "file": "src/pages/CourseFinalization/components/BookCardList/BookCardList.tsx",
+          "hash": "2131986920074771542"
+        },
+        {
+          "file": "src/pages/CourseFinalization/components/BookDetailsModal/BookCardModal.css",
+          "hash": "2186265608613456953"
+        },
+        {
+          "file": "src/pages/CourseFinalization/components/BookDetailsModal/BookDetailsModal.tsx",
+          "hash": "3678397531107074255"
+        },
+        {
+          "file": "src/pages/CourseFinalization/hooks/useFetchTableOfContents.ts",
+          "hash": "8132231138993556989"
+        },
+        {
+          "file": "src/pages/HomePage/HomePage.css",
+          "hash": "2509911357780935748"
+        },
+        {
+          "file": "src/pages/HomePage/HomePage.tsx",
+          "hash": "198077534698613144"
+        },
+        {
+          "file": "src/pages/LoginPage/LoginPage.tsx",
+          "hash": "9460978088081421573"
+        },
+        {
+          "file": "src/vite-env.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "tsconfig.json",
+          "hash": "14032556756270793734"
+        },
+        {
+          "file": "tsconfig.node.json",
+          "hash": "8586866767247417612"
+        },
+        {
+          "file": "vite.config.ts",
+          "hash": "7008402861428644331"
+        }
+      ]
+    },
+    "nonProjectFiles": []
+  }
+}
