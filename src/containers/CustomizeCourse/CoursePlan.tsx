@@ -7,38 +7,60 @@ import BouncingDotsLoader from '../../components/BouncingDotsLoader/BouncingDots
 
 function CoursePlan({ plan, isCourseLoading } : {plan: string | null, isCourseLoading: boolean}) {
     return (
-        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', p: 2 }}>
-          <Typography variant="h6" gutterBottom component="div">
+        <Box sx={{ 
+            width: '100%', 
+            maxWidth: 1008, 
+            bgcolor: '#D9D9D9',
+            borderRadius: "40px",
+            p: 2 }}>
+          <Typography gutterBottom component="div" align="center" sx={{
+            color: "#000",
+            fontSize: "32px",
+            fontWeight: "800",
+          }}>
             Course Plan
           </Typography>
           {isCourseLoading 
-            ? (<>
-                <Typography variant="subtitle1" gutterBottom component="div">
+            ? (<Box alignItems="center">
+                <Typography gutterBottom component="div" align="center" sx={{
+                    color: "#000",
+                    fontSize: "32px",
+                    fontWeight: "200",
+                    paddingTop: "80px",
+                    paddingBottom: "8px",
+                }}>
                     Generating
                 </Typography>
                 <BouncingDotsLoader />
-              </>)
+              </Box>)
             :  (<>
                 {plan && (
                     <>
-                        <Typography variant="body1" gutterBottom component="div">
+                        <Typography gutterBottom component="div" sx={{
+                            color: "#000",
+                            fontSize: "16px",
+                            fontWeight: "400",
+                            lineHeight: "24px"
+                        }}>
                             {plan}
                         </Typography>
-                        <Button 
-                            variant="contained" 
-                            onClick={() => {
-                                console.log('Clicked')
-                            }}>
-                                Start Course
-                        </Button>
+                        <Box alignItems="center">
+                            <Button 
+                                variant="contained" 
+                                onClick={() => {
+                                    console.log('Clicked')
+                                }}>
+                                    Start Course
+                            </Button>
+                        </Box>
                     </>
                 )}
                 {!plan && (
-                    <>
-                        <Typography variant="subtitle1" gutterBottom component="div">
-                            No plan generated yet
+                    <Box alignItems="center">
+                        <Typography variant="subtitle1" gutterBottom component="div" align="center" sx={{paddingTop: "80px"}}>
+                            No plan generated
                         </Typography>
-                    </>
+                    </Box>
                 )}
             </>)}
         </Box>
