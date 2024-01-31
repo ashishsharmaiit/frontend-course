@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import courseData from './courseData.json'; // Importing the JSON data
 
 interface Lesson {
   LessonTitle: string;
@@ -26,22 +27,29 @@ const DataDisplayPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        fetch('http://localhost:8080')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data: Data) => {
-                setData(data);
-                setIsLoading(false);
-            })
-            .catch((error: Error) => {
-                setError(error.message);
-                setIsLoading(false);
-            });
+        fetch('http://localhost:8080', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(courseData), // Sending the JSON data
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((data: Data) => {
+            setData(data);
+            setIsLoading(false);
+        })
+        .catch((error: Error) => {
+            setError(error.message);
+            setIsLoading(false);
+        });
     }, []);
+
 
     if (isLoading) {
         return <div>Loading...</div>;
