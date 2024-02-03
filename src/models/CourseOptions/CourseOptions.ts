@@ -8,3 +8,7 @@ export interface CourseOptions {
     readonly previousKnowledge?: string;
     readonly otherConsiderations?: string;
 }
+
+export interface CourseFirstOptions {
+    readonly topic: string;
+}

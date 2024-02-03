@@ -12,7 +12,7 @@ import MenuAppBar from "../../components/MenuAppBar/MenuAppBar";
 const CoursePage = () => {
     const dispatch = useDispatch()
 
-    const { coursePlan, isCourseLoading } = useAppSelector(state => state.courseReducer)
+    const { coursePlan, courseOptions, isCourseLoading } = useAppSelector(state => state.courseReducer)
 
     const handleSubmit = async (courseOptions: CourseOptions) => {
         await dispatch(
@@ -26,7 +26,7 @@ const CoursePage = () => {
         <Box>
             <MenuAppBar></MenuAppBar>
             <Stack direction="row" justifyContent="center" spacing={2}>
-                <CustomizeCourse handleSubmit={handleSubmit} />
+                <CustomizeCourse initOptions={courseOptions} handleSubmit={handleSubmit} />
                 <CoursePlan plan={coursePlan} isCourseLoading={isCourseLoading}/>
             </Stack>
         </Box>

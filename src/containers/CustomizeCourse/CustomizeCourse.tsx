@@ -10,14 +10,16 @@ import AddButton from '../../components/AddButton/AddButton';
 import DynamicList from '../../components/DynamicList/DynamicList';
 
 function CustomizeCourse({
+    initOptions,
     handleSubmit
 } : {
+    initOptions: CourseOptions | null,
     handleSubmit: (courseOptions: CourseOptions) => void
 }) {
   // primary input fields   
-  const [duration, setDuration] = React.useState("5");
-  const [courseTopic, setCourseTopic] = React.useState('Neural Net for Robotics');
-  const [teachingStyle, setTeachingStyle] = React.useState({text: '', count: 1});
+  const [duration, setDuration] = React.useState(initOptions?.duration ?? "5");
+  const [courseTopic, setCourseTopic] = React.useState(initOptions?.topic ?? 'Neural Net for Robotics');
+  const [teachingStyle, setTeachingStyle] = React.useState({text: initOptions?.teachingStyle ?? '', count: 1});
 
   // secondary input fields
   const [focus, setFocus] = React.useState({text: '', count: 0});

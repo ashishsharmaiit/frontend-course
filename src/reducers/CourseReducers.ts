@@ -1,5 +1,8 @@
+import { CourseOptions } from "../models/CourseOptions/CourseOptions";
+
 export interface courseReducerProps {
     coursePlan: string;
+    courseOptions: CourseOptions | null;
     isCourseError: boolean;
     isCourseLoading: boolean;
 }
@@ -12,11 +15,13 @@ export enum CourseActionTypes {
 
 export interface CourseAction {
     data: string;
+    options: CourseOptions | null;
     type: CourseActionTypes;
 }
 
 const initState: courseReducerProps = {
     coursePlan: '',
+    courseOptions: null,
     isCourseError: false,
     isCourseLoading: false
 }
@@ -33,6 +38,7 @@ const courseReducer = (state = initState, action: CourseAction) => {
             return {
                 ...state,
                 coursePlan: action.data,
+                courseOptions: action.options,
                 isCourseLoading: false,
                 isCourseError: false,
             }
