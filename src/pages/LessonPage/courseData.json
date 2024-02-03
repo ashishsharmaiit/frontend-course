@@ -1,5 +1,5 @@
 {
-    "Course Plan": [
+    "course_plan": [
         {
             "SectionNumber": 1,
             "SectionName": "Introduction to Neural Networks",
