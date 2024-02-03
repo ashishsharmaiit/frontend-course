@@ -1,32 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import courseData from './courseData.json'; // Importing the JSON data
 
-interface Lesson {
-  LessonTitle: string;
-  Content: string;
-}
-
-interface Chapter {
-  ChapterTitle: string;
-  Lessons: Lesson[];
-}
-
-interface LessonPlan {
-  Chapters: Chapter[];
-}
-
-interface Data {
-  inserted_id: string;
-  lesson_plan: LessonPlan;
-  detailed_content: string;
-}
-
 const DataDisplayPage: React.FC = () => {
-    const [data, setData] = useState<Data | null>(null);
+    const [data, setData] = useState<any | null>(null); // Changed to 'any'
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        console.log('Sending request with data:', courseData); // Log the data being sent
         fetch('http://localhost:8080', {
             method: 'POST',
             headers: {
@@ -35,16 +16,22 @@ const DataDisplayPage: React.FC = () => {
             body: JSON.stringify(courseData), // Sending the JSON data
         })
         .then(response => {
+            console.log('Response received:', response); // Log the response object
+
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok, status: ${response.status}`);
             }
             return response.json();
         })
-        .then((data: Data) => {
-            setData(data);
+        .then((receivedData) => { // Removed type annotation
+            console.log('Data parsed from response:', receivedData); // Log the parsed data
+
+            setData(receivedData); // Use the received data directly
             setIsLoading(false);
         })
         .catch((error: Error) => {
+            console.error('Error caught:', error); // Log any errors caught
+
             setError(error.message);
             setIsLoading(false);
         });
@@ -61,15 +48,9 @@ const DataDisplayPage: React.FC = () => {
 
     return (
         <div>
-            <h1>Data from Server</h1>
-            <h2>Inserted ID: {data?.inserted_id}</h2>
             <div>
-              <h3>Lesson Plan:</h3>
-              <pre>{JSON.stringify(data?.lesson_plan, null, 2)}</pre>
-            </div>
-            <div>
-              <h3>Detailed Content:</h3>
-              <pre>{data?.detailed_content}</pre>
+              <h3>Received Data:</h3>
+              <pre>{JSON.stringify(data, null, 2)}</pre> {/* Adjusted for readability */}
             </div>
         </div>
     );
