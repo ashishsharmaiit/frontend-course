@@ -45,10 +45,7 @@
         "previousKnowledge": "Basic programming and robotics",
         "otherConsiderations": "Access to computational resources for deep learning"
     },
-	"Progress_Status": {
-        "section_status": 0,
-        "chapter_status": 0,
-        "lesson_status": 0
-    },
-	"course_id": ""
+	"Progress_Status": 0,
+	"course_id": "",
+    "course_content": {}
 }
