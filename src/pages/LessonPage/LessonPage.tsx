@@ -34,11 +34,21 @@ const DataDisplayPage: React.FC = () => {
 
   const handleContinue = () => {
     setData(prevData => ({
-    ...prevData,
-    Progress_Status: prevData.Progress_Status + 1,
+      ...prevData,
+      Progress_Status: Math.min(prevData.Progress_Status + 1, Object.keys(prevData.course_content).length),
     }));
-    };
-
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  };
+  
+  const handlePrevious = () => {
+    setData(prevData => ({
+      ...prevData,
+      Progress_Status: Math.max(prevData.Progress_Status - 1, 0),
+    }));
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  };
+  
+  
   useEffect(() => {
     // Function to check if we need to fetch data
 
@@ -65,6 +75,7 @@ const DataDisplayPage: React.FC = () => {
         }
   
         const receivedData: Partial<CourseData> = await response.json(); // Use Partial to indicate that any of the CourseData properties may be present
+        console.log('Received Data:', receivedData);
   
         // Update state based on the received data
         setData(prevData => {
@@ -72,7 +83,7 @@ const DataDisplayPage: React.FC = () => {
             ...prevData,
             course_id: receivedData.course_id || prevData.course_id, // Update course_id if present, otherwise keep existing
             course_content: { ...prevData.course_content, ...receivedData.course_content }, // Merge new course content with existing
-            // Potentially handle other fields similarly
+            course_plan: receivedData.course_plan ? receivedData.course_plan : prevData.course_plan,
           };
   
           // Log the updated state
@@ -116,7 +127,8 @@ const DataDisplayPage: React.FC = () => {
           <Typography style={{ whiteSpace: 'pre-wrap' }}>{content.content}</Typography>
         )}
       </Box>
-      <Box textAlign="right" paddingTop="50px">
+      <Box textAlign="right" paddingTop="50px" display="flex" justifyContent="space-between">
+        <Button variant="contained" color="primary" onClick={handlePrevious}>Previous</Button>
         <Button variant="contained" color="primary" onClick={handleContinue}>Continue</Button>
       </Box>
     </Container>
