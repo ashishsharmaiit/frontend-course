@@ -1,41 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import initialCourseData from './courseData.json';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../store';
+import { updateCourseContent } from "../../actions/CourseActions";
+import { CourseData } from '../../models/CourseOptions/CourseData';
 
-interface CourseContent {
-  h1?: string;
-  h2?: string;
-  content?: string;
-}
+function DataDisplayPage() {
+  const dispatch = useDispatch()
 
-interface CourseData {
-  course_plan: Array<any>; // You should define a specific type for course_plan items
-  course_options: {
-    topic: string;
-    duration: string;
-    teachingStyle: string;
-    focusOn: string;
-    purposeFor: string;
-    previousKnowledge: string;
-    otherConsiderations: string;
-  };
-  Progress_Status: number;
-  course_id: string;
-  course_content: Record<string, CourseContent>;
-}
-
-const DataDisplayPage: React.FC = () => {
-  const [data, setData] = useState<CourseData>(initialCourseData);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { courseOptions, courseContent, detailedCoursePlan, isCourseLoading } = useAppSelector(state => state.courseReducer)
+    
+  const [data, setData] = useState<CourseData>({
+        courseOptions: courseOptions,
+        courseContent: courseContent,
+        detailedCoursePlan: detailedCoursePlan,
+    });
 
   const handleContinue = () => {
+    const numKeys = courseContent ? Object.keys(courseContent).length : 0;
+    
     setData(prevData => ({
       ...prevData,
-      Progress_Status: Math.min(prevData.Progress_Status + 1, Object.keys(prevData.course_content).length),
+      progressStatus: Math.min((prevData.progressStatus ?? 0) + 1, numKeys),
     }));
     window.scrollTo(0, 0); // Scroll to the top of the page
   };
@@ -43,7 +32,7 @@ const DataDisplayPage: React.FC = () => {
   const handlePrevious = () => {
     setData(prevData => ({
       ...prevData,
-      Progress_Status: Math.max(prevData.Progress_Status - 1, 0),
+      progressStatus: Math.max((prevData.progressStatus ?? 0) - 1, 0),
     }));
     window.scrollTo(0, 0); // Scroll to the top of the page
   };
@@ -52,65 +41,24 @@ const DataDisplayPage: React.FC = () => {
   useEffect(() => {
     // Function to check if we need to fetch data
 
-      // Function to increment Progress_Status
+      // Function to increment progressStatus
 
     const shouldFetchData = () => {
-      const nextProgressState = (data.Progress_Status + 1).toString();
+      const nextProgressState = ((data.progressStatus ?? 0) + 1).toString();
       // Check if content for the next progress status is already available
-      return !data.course_content[nextProgressState];
-    };
-  
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:8080', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data), // Send current state data
-        });
-  
-        if (!response.ok) {
-          throw new Error(`Network response was not ok, status: ${response.status}`);
-        }
-  
-        const receivedData: Partial<CourseData> = await response.json(); // Use Partial to indicate that any of the CourseData properties may be present
-        console.log('Received Data:', receivedData);
-  
-        // Update state based on the received data
-        setData(prevData => {
-          const updatedData: CourseData = {
-            ...prevData,
-            course_id: receivedData.course_id || prevData.course_id, // Update course_id if present, otherwise keep existing
-            course_content: { ...prevData.course_content, ...receivedData.course_content }, // Merge new course content with existing
-            course_plan: receivedData.course_plan ? receivedData.course_plan : prevData.course_plan,
-          };
-  
-          // Log the updated state
-          console.log('Updated state:', updatedData);
-          return updatedData;
-        });
-  
-        setIsLoading(false);
-  
-      } catch (error: any) {
-        setError(error.message);
-        setIsLoading(false);
-      }
+      return (data.courseContent && !data.courseContent[nextProgressState]);
     };
   
     if (shouldFetchData()) {
-      fetchData();
-    } else {
-      setIsLoading(false); // Set loading to false since no fetch is needed
-    }
-  }, [data.Progress_Status, data.course_content]); // Depend on Progress_Status and course_content
+        dispatch(updateCourseContent(data));
+    } 
+  }, [data.progressStatus, data.courseContent]); // Depend on progressStatus and courseContent
   
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (isCourseLoading) return <div>Loading...</div>;
+  if (!data.courseContent) return <div>No content found...</div>;
 
-  const progressState = data.Progress_Status.toString();
-  const content = data.course_content[progressState];
+  const progressState = (data.progressStatus ?? 0).toString();
+  const content = data.courseContent[progressState];
 
   return (
     <Container maxWidth="md" style={{ paddingTop: '100px', paddingBottom: '50px' }}>

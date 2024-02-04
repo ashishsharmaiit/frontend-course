@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { 
     Typography, 
     Box, 
@@ -6,6 +7,12 @@ import {
 import BouncingDotsLoader from '../../components/BouncingDotsLoader/BouncingDotsLoader';
 
 function CoursePlan({ plan, isCourseLoading } : {plan: string | null, isCourseLoading: boolean}) {
+    const navigate = useNavigate();
+
+    const handleSubmit = async () => {
+        navigate("/lesson");
+    };
+
     return (
         <Box sx={{ 
             width: '100%', 
@@ -48,7 +55,8 @@ function CoursePlan({ plan, isCourseLoading } : {plan: string | null, isCourseLo
                             <Button 
                                 variant="contained" 
                                 onClick={() => {
-                                    console.log('Clicked')
+                                    console.log('Clicked');
+                                    handleSubmit();
                                 }}>
                                     Start Course
                             </Button>

@@ -1,5 +1,5 @@
 {
-    "course_plan": [
+    "coursePlan": [
         {
             "SectionNumber": 1,
             "SectionName": "Introduction to Neural Networks",
@@ -36,7 +36,7 @@
             "SectionTime": "3 hours"
         }
     ],
-    "course_options": {
+    "courseOptions": {
         "topic": "Neural Networks for Robotics",
         "duration": "15 hours",
         "teachingStyle": "Interactive with hands-on projects",
@@ -45,7 +45,7 @@
         "previousKnowledge": "Basic programming and robotics",
         "otherConsiderations": "Access to computational resources for deep learning"
     },
-	"Progress_Status": 0,
-	"course_id": "",
-    "course_content": {}
+	"progressStatus": 0,
+	"courseId": "",
+    "courseContent": {}
 }

@@ -1,3 +1,4 @@
+import { CourseData } from "../models/CourseOptions/CourseData";
 import { CourseOptions, CourseFirstOptions } from "../models/CourseOptions/CourseOptions";
 import { CourseActionTypes } from "../reducers/CourseReducers";
 import { toast } from "react-toastify"
@@ -58,6 +59,35 @@ export const generateCoursePlan = (
             console.log(error);
             toast.error('Error generating course plan');
             dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
+        });
+    }
+}
+
+export const updateCourseContent = (
+    courseData: CourseData
+): any => {
+    return function (dispatch: any) {
+        dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' })
+
+        fetch("http://localhost:8080", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(courseData), // body data type must match "Content-Type" header
+        })
+        .then(async (response) => {
+            if (response.status !== 204) {
+                const data = await response.clone().json();
+                dispatch({ type: CourseActionTypes.UpdateCourseContent, content: data.courseContent, detailedPlan: data.detailedPlan });
+                return;
+            }
+            dispatch({ type: CourseActionTypes.CourseContentNotUpdated });
+        })
+        .catch((error) => {
+            console.log(error);
+            toast.error('Error generating course plan');
+            dispatch({ type: CourseActionTypes.CourseContentNotUpdated });
         });
     }
 }
