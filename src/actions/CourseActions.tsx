@@ -11,8 +11,15 @@ export const generateFirstCoursePlan = (
 
         axios({
             method: 'post',
-            url: 'http://localhost:8080/generate_first_course_plan',
-            data: courseFirstOptions
+            url: 'https://us-central1-socratiq.cloudfunctions.net/course_plan_generator',
+            data: JSON.stringify({
+                "course_options": courseFirstOptions
+            }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST',
+                'Content-Type': 'application/json'
+            }
         })
         .then((response) => {
             if (response.data && response.data.plan) {
@@ -37,8 +44,15 @@ export const generateCoursePlan = (
 
         axios({
             method: 'post',
-            url: 'http://localhost:8080/generate_course_plan',
-            data: courseOptions
+            url: 'https://us-central1-socratiq.cloudfunctions.net/course_plan_generator',
+            data: JSON.stringify({
+                "course_options": courseOptions
+            }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST',
+                'Content-Type': 'application/json'
+            }
         })
         .then((response) => {
             if (response.data && response.data.plan) {

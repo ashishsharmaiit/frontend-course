@@ -17,8 +17,8 @@ function CustomizeCourse({
     handleSubmit: (courseOptions: CourseOptions) => void
 }) {
   // primary input fields   
-  const [duration, setDuration] = React.useState(initOptions?.duration ?? "5");
-  const [courseTopic, setCourseTopic] = React.useState(initOptions?.topic ?? 'Neural Net for Robotics');
+  const [duration, setDuration] = React.useState(initOptions?.duration ?? '');
+  const [courseTopic, setCourseTopic] = React.useState(initOptions?.topic ?? '');
   const [teachingStyle, setTeachingStyle] = React.useState({text: initOptions?.teachingStyle ?? '', count: 1});
 
   // secondary input fields
@@ -29,7 +29,7 @@ function CustomizeCourse({
 
   const [customizationData, setCustomizationData] = React.useState({
     topic: courseTopic ?? "",
-    duration: `${duration} weeks` ?? "",
+    duration: (duration ? `${duration} weeks` : ""),
     teachingStyle: teachingStyle.text ?? "",
     focusOn: focus.text ?? "",
     purposeFor: purpose.text ?? "",

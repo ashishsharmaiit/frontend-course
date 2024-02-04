@@ -34,7 +34,6 @@ const SearchBar = ({setSearchQuery} : {setSearchQuery: (courseOptions: CourseFir
         }}
         label="I want to learn about"
         InputProps={{ 
-            disableUnderline: true,
             style: {
                 borderRadius: "25px",
             },
@@ -82,7 +81,7 @@ const CourseFirstPage = () => {
                         borderRadius: "20px"}}>
                         <Typography gutterBottom component="div" align="center" sx={{
                                 color: "#000",
-                                fontSize: "45px",
+                                fontSize: "42px",
                                 fontWeight: "400",
                             }}>
                             Learn what you want, the way you want

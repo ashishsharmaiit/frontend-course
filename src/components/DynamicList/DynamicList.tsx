@@ -42,6 +42,7 @@ export default function DynamicList({onAddItem, onChange} : {onAddItem: number, 
             <List>
             {serviceList.map((element, index) => (
                 <ListItem
+                    key={index}
                     secondaryAction={
                     <IconButton 
                         onClick={() => handleServiceRemove(index)} 
