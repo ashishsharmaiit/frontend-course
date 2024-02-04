@@ -1,7 +1,8 @@
-import axios from 'axios';
 import { CourseOptions, CourseFirstOptions } from "../models/CourseOptions/CourseOptions";
 import { CourseActionTypes } from "../reducers/CourseReducers";
 import { toast } from "react-toastify"
+
+const courseGenUrl = 'https://us-central1-socratiq.cloudfunctions.net/course_plan_generator'
 
 export const generateFirstCoursePlan = (
     courseFirstOptions: CourseFirstOptions
@@ -9,19 +10,17 @@ export const generateFirstCoursePlan = (
     return function (dispatch: any) {
         dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' })
 
-        axios({
-            method: 'post',
-            url: 'https://us-central1-socratiq.cloudfunctions.net/course_plan_generator',
-            data: JSON.stringify({
-                "course_options": courseFirstOptions
-            }),
+        fetch(courseGenUrl, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
-                'Content-Type': 'application/json'
-            }
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({"course_options": courseFirstOptions}), // body data type must match "Content-Type" header
         })
-        .then((response) => {
-            if (response.data && response.data.plan) {
-                dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: response.data.plan, options: response.data.options });
+        .then(async (response) => {
+            if (response.status !== 204) {
+                const data = await response.clone().json();
+                dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: data.plan, options: data.options });
                 return;
             }
             dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
@@ -40,19 +39,17 @@ export const generateCoursePlan = (
     return function (dispatch: any) {
         dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' })
 
-        axios({
-            method: 'post',
-            url: 'https://us-central1-socratiq.cloudfunctions.net/course_plan_generator',
-            data: JSON.stringify({
-                "course_options": courseOptions
-            }),
+        fetch(courseGenUrl, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
-                'Content-Type': 'application/json'
-            }
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({"course_options": courseOptions}), // body data type must match "Content-Type" header
         })
-        .then((response) => {
-            if (response.data && response.data.plan) {
-                dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: response.data.plan, options: response.data.options });
+        .then(async (response) => {
+            if (response.status !== 204) {
+                const data = await response.clone().json();
+                dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: data.plan, options: data.options });
                 return;
             }
             dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
