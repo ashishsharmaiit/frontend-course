@@ -141,7 +141,7 @@ function CustomizeCourse({
                 <TextField 
                     variant="standard"
                     fullWidth 
-                    defaultValue="Neural Net for Robotics" 
+                    defaultValue="" 
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setCourseTopic(event.target.value);
                         setCustomizationData({
@@ -176,7 +176,6 @@ function CustomizeCourse({
                 <TextField 
                     variant="standard"
                     fullWidth 
-                    defaultValue={2}
                     type="number"
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setDuration(event.target.value);

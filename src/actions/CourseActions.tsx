@@ -16,8 +16,6 @@ export const generateFirstCoursePlan = (
                 "course_options": courseFirstOptions
             }),
             headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST',
                 'Content-Type': 'application/json'
             }
         })
@@ -49,8 +47,6 @@ export const generateCoursePlan = (
                 "course_options": courseOptions
             }),
             headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST',
                 'Content-Type': 'application/json'
             }
         })
