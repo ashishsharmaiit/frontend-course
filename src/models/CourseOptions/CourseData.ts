@@ -22,7 +22,6 @@ export interface LessonPlan {
 }
 
 export interface CoursePlan {
-    courseId?: string;
     sectionName: string;
     sectionTime: string;
     sectionNumber: number;
