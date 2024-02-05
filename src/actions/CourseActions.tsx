@@ -3,14 +3,13 @@ import { CourseOptions, CourseFirstOptions } from "../models/CourseOptions/Cours
 import { CourseActionTypes } from "../reducers/CourseReducers";
 import { toast } from "react-toastify"
 
-const courseGenUrl = 'https://us-central1-socratiq.cloudfunctions.net/course_plan_generator'
+const courseGenUrl = 'http://localhost:8080/'
 
 export const generateFirstCoursePlan = (
     courseFirstOptions: CourseFirstOptions
 ): any => {
     return function (dispatch: any) {
         dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' })
-
         fetch(courseGenUrl, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
@@ -69,7 +68,7 @@ export const updateCourseContent = (
     return function (dispatch: any) {
         dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' })
 
-        fetch("http://localhost:8080", {
+        fetch("http://localhost:8081", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
               "Content-Type": "application/json",

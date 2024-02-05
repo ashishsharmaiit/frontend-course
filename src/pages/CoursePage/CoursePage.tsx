@@ -13,7 +13,7 @@ const CoursePage = () => {
     const dispatch = useDispatch()
 
     const { coursePlan, courseOptions, isCourseLoading } = useAppSelector(state => state.courseReducer)
-
+    console.log("coursePlan", coursePlan, "courseOptions", courseOptions)
     const handleSubmit = async (courseOptions: CourseOptions) => {
         await dispatch(
             generateCoursePlan(
