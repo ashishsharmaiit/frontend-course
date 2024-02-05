@@ -9,29 +9,44 @@ export const generateFirstCoursePlan = (
     courseFirstOptions: CourseFirstOptions
 ): any => {
     return function (dispatch: any) {
-        dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' })
+        dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: '', options: courseFirstOptions});
+        dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' });
         fetch(courseGenUrl, {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({"course_options": courseFirstOptions}), // body data type must match "Content-Type" header
+            body: JSON.stringify({"course_options": courseFirstOptions}),
         })
         .then(async (response) => {
             if (response.status !== 204) {
-                const data = await response.clone().json();
-                dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: data.plan, options: data.options });
+                const jsonResponse = await response.json(); // First, parse the response to JSON.
+                if(jsonResponse.error === null) {
+                    const detailedResponse = JSON.parse(jsonResponse.response); // Parse the stringified 'response' field to JSON.
+                    const { detailedCoursePlan, courseOptions } = detailedResponse; // Destructure the needed properties.
+                    console.log ("courseoptions",courseOptions);
+                    dispatch({ 
+                        type: CourseActionTypes.UpdateCoursePlan, 
+                        data: detailedCoursePlan, // Assuming 'data' should be the 'detailedCoursePlan'
+                        options: courseOptions // Assuming 'options' should be 'courseOptions'
+                    });
+                } else {
+                    // Handle the case where there is an error in the jsonResponse
+                    console.error(jsonResponse.error);
+                    toast.error('Error in response');
+                    dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
+                }
                 return;
             }
             dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
         })
         .catch((error) => {
-            console.log(error);
+            console.error(error);
             toast.error('Error generating course plan');
             dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
         });
     }
-}
+};
 
 export const generateCoursePlan = (
     courseOptions: CourseOptions

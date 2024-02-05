@@ -12,14 +12,18 @@ import MenuAppBar from "../../components/MenuAppBar/MenuAppBar";
 const CoursePage = () => {
     const dispatch = useDispatch()
 
-    const { coursePlan, courseOptions, isCourseLoading } = useAppSelector(state => state.courseReducer)
-    console.log("coursePlan", coursePlan, "courseOptions", courseOptions)
+    const { detailedCoursePlan, courseOptions, isCourseLoading } = useAppSelector(state => state.courseReducer)
     const handleSubmit = async (courseOptions: CourseOptions) => {
-        await dispatch(
+        console.log({
+            detailedCoursePlan,
+            courseOptions,
+            isCourseLoading
+        });
+        /*await dispatch(
             generateCoursePlan(
                 courseOptions
             )
-        );
+        );*/
     };
     
     return (
@@ -27,7 +31,7 @@ const CoursePage = () => {
             <MenuAppBar></MenuAppBar>
             <Stack direction="row" justifyContent="center" spacing={2}>
                 <CustomizeCourse initOptions={courseOptions} handleSubmit={handleSubmit} />
-                <CoursePlan plan={coursePlan} isCourseLoading={isCourseLoading}/>
+                <CoursePlan plan={detailedCoursePlan} isCourseLoading={isCourseLoading}/>
             </Stack>
         </Box>
     );

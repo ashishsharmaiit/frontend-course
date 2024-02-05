@@ -17,9 +17,9 @@ function CustomizeCourse({
     handleSubmit: (courseOptions: CourseOptions) => void
 }) {
   // primary input fields   
-  const [duration, setDuration] = React.useState(initOptions?.duration ?? '');
+  const [durationInHours, setDuration] = React.useState(initOptions?.durationInHours ?? 0);
   const [courseTopic, setCourseTopic] = React.useState(initOptions?.topic ?? '');
-  const [teachingStyle, setTeachingStyle] = React.useState({text: initOptions?.teachingStyle ?? '', count: 1});
+  const [teachingStyle, setTeachingStyle] = React.useState({text: initOptions?.teachingStyle ?? '', count: 0});
 
   // secondary input fields
   const [focus, setFocus] = React.useState({text: '', count: 0});
@@ -29,13 +29,21 @@ function CustomizeCourse({
 
   const [customizationData, setCustomizationData] = React.useState({
     topic: courseTopic ?? "",
-    duration: (duration ? `${duration} weeks` : ""),
+    durationInHours: durationInHours ?? 0,
     teachingStyle: teachingStyle.text ?? "",
     focusOn: focus.text ?? "",
     purposeFor: purpose.text ?? "",
     previousKnowledge: knowledge.text ?? "",
     otherConsiderations: considerations.text ?? ""
   });
+
+  React.useEffect(() => {
+    setDuration(initOptions?.durationInHours ?? 0);
+  }, [initOptions?.durationInHours]);
+
+  React.useEffect(() => {
+    setCourseTopic(initOptions?.topic ?? '');
+  }, [initOptions?.topic]);
 
   const handleTeachingStyle = (newTeachingStyle: string, countItem: number) => {
     if (newTeachingStyle !== null) {
@@ -141,7 +149,7 @@ function CustomizeCourse({
                 <TextField 
                     variant="standard"
                     fullWidth 
-                    defaultValue="" 
+                    value={courseTopic} // Use state as value
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setCourseTopic(event.target.value);
                         setCustomizationData({
@@ -170,20 +178,19 @@ function CustomizeCourse({
                 fontWeight: "500",
                 paddingBottom: "2px"
             }}>
-                In (weeks)
+                In these many hours
             </Typography>
             <Box display="flex" justifyContent="flex-end">
                 <TextField 
                     variant="standard"
                     fullWidth 
                     type="number"
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setDuration(event.target.value);
-                        setCustomizationData({
-                            ...customizationData,
-                            duration: `${event.target.value} weeks`
-                        });
+                    value={durationInHours.toString()} // Reflect the state
+                    onChange={(e) => {
+                      const newDuration = parseFloat(e.target.value);
+                      setDuration(isNaN(newDuration) ? 0 : newDuration); // Update state
                     }}
+          
                     InputProps={{ disableUnderline: true }}
                     SelectProps={{ native: true }}
                     sx={{
@@ -197,25 +204,7 @@ function CustomizeCourse({
             </Box>
         </Box>
 
-        <Box sx={{ my: 2 }}>
-            <Stack direction={"row"} justifyContent="space-between">
-                <Typography gutterBottom sx={{
-                    color: "#000",
-                    fontSize: "15px",
-                    fontWeight: "500",
-                    paddingBottom: "2px"
-                }}>
-                    Teaching style
-                </Typography>
-                <AddButton height={"18px"} width={"18px"} onClick={() => (
-                    setTeachingStyle({
-                        ...teachingStyle,
-                        count: teachingStyle.count+1,
-                    })
-                )}></AddButton>
-            </Stack>
-            <DynamicList onAddItem={teachingStyle.count} onChange={handleTeachingStyle}></DynamicList>
-        </Box>
+
 
         <Box sx={{ my: 2 }}>
             <Stack direction={"row"} justifyContent="space-between">
@@ -275,6 +264,26 @@ function CustomizeCourse({
                 )}></AddButton>
             </Stack>
             <DynamicList onAddItem={purpose.count} onChange={handlePurpose}></DynamicList>
+        </Box>
+
+        <Box sx={{ my: 2 }}>
+            <Stack direction={"row"} justifyContent="space-between">
+                <Typography gutterBottom sx={{
+                    color: "#000",
+                    fontSize: "15px",
+                    fontWeight: "500",
+                    paddingBottom: "2px"
+                }}>
+                    Teaching style
+                </Typography>
+                <AddButton height={"18px"} width={"18px"} onClick={() => (
+                    setTeachingStyle({
+                        ...teachingStyle,
+                        count: teachingStyle.count+1,
+                    })
+                )}></AddButton>
+            </Stack>
+            <DynamicList onAddItem={teachingStyle.count} onChange={handleTeachingStyle}></DynamicList>
         </Box>
 
         <Box sx={{ my: 2 }}>

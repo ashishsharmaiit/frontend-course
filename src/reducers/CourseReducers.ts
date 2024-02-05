@@ -2,7 +2,6 @@ import { CourseContent, CoursePlan } from "../models/CourseOptions/CourseData";
 import { CourseOptions } from "../models/CourseOptions/CourseOptions";
 
 export interface courseReducerProps {
-    coursePlan: string;
     courseOptions: CourseOptions | null;
     courseContent: Record<string, CourseContent> | null;
     detailedCoursePlan: CoursePlan[];
@@ -19,7 +18,7 @@ export enum CourseActionTypes {
 }
 
 export interface CourseAction {
-    data: string;
+    data: CoursePlan[];
     detailedPlan: CoursePlan[];
     content: Record<string, CourseContent> | null;
     options: CourseOptions | null;
@@ -27,7 +26,6 @@ export interface CourseAction {
 }
 
 const initState: courseReducerProps = {
-    coursePlan: '',
     detailedCoursePlan: [],
     courseOptions: null,
     courseContent: null,
@@ -43,18 +41,26 @@ const courseReducer = (state = initState, action: CourseAction) => {
                 isCourseLoading: true,
                 isCourseError: false,
             }
+
         case CourseActionTypes.UpdateCoursePlan:
-            return {
+            console.log('Before update:', state.courseOptions, "actions.options", action.options);
+            const updatedState = {
                 ...state,
-                coursePlan: action.data,
-                courseOptions: action.options,
+                detailedCoursePlan: action.data,
+                courseOptions: {
+                    ...state.courseOptions,
+                    ...action.options,
+                },
                 isCourseLoading: false,
                 isCourseError: false,
-            }
+            };
+            console.log('After update:', updatedState.courseOptions);
+            return updatedState;
+            
         case CourseActionTypes.CoursePlanNotFound:
             return {
                 ...state,
-                coursePlan: '',
+                detailedCoursePlan: [],
                 isCourseLoading: false,
                 isCourseError: true,
             }

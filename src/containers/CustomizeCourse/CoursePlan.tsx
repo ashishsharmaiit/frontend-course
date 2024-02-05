@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import BouncingDotsLoader from '../../components/BouncingDotsLoader/BouncingDotsLoader';
 
-function CoursePlan({ plan, isCourseLoading } : {plan: string | null, isCourseLoading: boolean}) {
+function CoursePlan({ plan, isCourseLoading } : {plan: Array<{sectionNumber: number, sectionName: string, sectionTopics: string, sectionObjective: string, sectionTime: string}> | null, isCourseLoading: boolean}) {
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
@@ -49,7 +49,14 @@ function CoursePlan({ plan, isCourseLoading } : {plan: string | null, isCourseLo
                             fontWeight: "400",
                             lineHeight: "24px"
                         }}>
-                            {plan}
+                        {plan.map((section, index) => (
+                            <Box key={index} sx={{padding: "10px"}}>
+                                <Typography variant="h6">{section.sectionNumber}. {section.sectionName}</Typography>
+                                <Typography>Topics: {section.sectionTopics}</Typography>
+                                <Typography>Objective: {section.sectionObjective}</Typography>
+                                <Typography>Time: {section.sectionTime}</Typography>
+                            </Box>
+                        ))}
                         </Typography>
                         <Box alignItems="center">
                             <Button 
