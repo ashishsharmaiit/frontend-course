@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-//import initialCourseData from './courseData.json';
-import { CourseData } from "../../models/CourseOptions/CourseData";
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../store';
 import { updateCourseContent, updateProgressStatus } from "../../actions/CourseActions";
@@ -20,28 +18,16 @@ function DataDisplayPage() {
   // Convert courseId from potentially null to undefined to satisfy TypeScript
   const safeCourseId = courseId === null ? undefined : courseId;
   
-  /*
-  const [data, setData] = useState<CourseData>({
-    courseOptions: courseOptions,
-    courseContent: courseContent,
-    detailedCoursePlan: detailedCoursePlan,
-    courseId: courseId,
-    progressStatus: progressStatus
-
-  });*/
-
-  /*const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);*/
-  const [initialDataFetched, setInitialDataFetched] = useState(false);
-
   const progressState = (progressStatus ?? 0).toString();
   const content = courseContent ? courseContent[progressState] : undefined; // Ensure courseContent exists
   
   const handleContinue = () => {
-    const newProgressStatus = Math.min(progressStatus ?? 0 + 1, Object.keys(courseContent || {}).length);
+    const newProgressStatus = Math.min((progressStatus ?? 0) + 1, Object.keys(courseContent || {}).length);
+    console.log('New progress status:', newProgressStatus); // Add logging for debugging
     dispatch(updateProgressStatus(newProgressStatus));
     window.scrollTo(0, 0);
   };
+  
   
   
   const handlePrevious = () => {
@@ -49,26 +35,25 @@ function DataDisplayPage() {
     dispatch(updateProgressStatus(newProgressStatus));
     window.scrollTo(0, 0);
   };
-  
-  
-  
-  console.log('progressStatus:', progressStatus);
-  console.log('progressState:', progressState);
-  console.log('courseContent:', courseContent);
-  console.log('content for current progressState:', content);
-
-  
+    
   useEffect(() => {
     const shouldFetchData = () => {
-      // Adjust condition to avoid continuous fetching
-      return !initialDataFetched && (!courseContent || !courseContent[progressState]);
+      const currentStateNumber = parseInt(progressState, 10);
+      const nextState = currentStateNumber + 1;
+      
+      // Check if there's no content for the current state or if prefetching is needed for the next state.
+      const isCurrentStateMissingContent = !courseContent || !courseContent[progressState];
+      const isNextStateMissingContent = !courseContent || !courseContent[nextState.toString()];
+  
+      // Fetch if content is missing for the current or next state, regardless of initialDataFetched.
+      return isCurrentStateMissingContent || isNextStateMissingContent;
     };
-
+  
     if (shouldFetchData()) {
       dispatch(updateCourseContent({ courseOptions, courseContent, detailedCoursePlan, courseId: safeCourseId, progressStatus }));
-      setInitialDataFetched(true); // Mark as fetched to prevent re-fetching
     }
-  }, [dispatch, progressStatus, progressState, initialDataFetched, courseContent]);
+  }, [dispatch, progressStatus, progressState, courseContent, courseOptions, detailedCoursePlan, safeCourseId]);
+  
 
     if (isCourseLoading) {
       console.log("Content is loading...");

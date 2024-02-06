@@ -95,7 +95,7 @@ export const updateCourseContent = (
             if (response.status !== 204) {
                 const data = await response.clone().json();
                 console.log("received this response", data)
-                dispatch({ type: CourseActionTypes.UpdateCourseContent, content: data.courseContent, data: data.detailedCoursePlan });
+                dispatch({ type: CourseActionTypes.UpdateCourseContent, content: data.courseContent, data: data.detailedCoursePlan, id: data.courseId });
                 return;
             }
             dispatch({ type: CourseActionTypes.CourseContentNotUpdated });

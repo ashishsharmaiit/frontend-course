@@ -26,6 +26,7 @@ export interface CourseAction {
     options: CourseOptions | null;
     type: CourseActionTypes;
     payload?: number; // Add this line, assuming payload is a number
+    id: string | null;
 }
 
 const initState: courseReducerProps = {
@@ -80,7 +81,8 @@ const courseReducer = (state = initState, action: CourseAction) => {
                 ...action.content,
             };
             const updatedDetailedCoursePlan = action.data !== undefined ? action.data : state.detailedCoursePlan;
-        
+            const updatedCourseId = action.id !== undefined ? action.id : state.courseId;
+
             // Log the values that will be used to update the state
             console.log('Updated courseContent:', updatedCourseContent);
             console.log('Updated detailedCoursePlan:', updatedDetailedCoursePlan);
@@ -90,6 +92,7 @@ const courseReducer = (state = initState, action: CourseAction) => {
                 ...state,
                 courseContent: updatedCourseContent,
                 detailedCoursePlan: updatedDetailedCoursePlan,
+                courseId: updatedCourseId,
                 isCourseLoading: false,
                 isCourseError: false, // Assuming you want to mark it as false if this action is successfully processed
             };
