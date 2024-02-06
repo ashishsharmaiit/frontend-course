@@ -3,7 +3,8 @@ import { CourseOptions, CourseFirstOptions } from "../models/CourseOptions/Cours
 import { CourseActionTypes } from "../reducers/CourseReducers";
 import { toast } from "react-toastify"
 
-const courseGenUrl = 'http://localhost:8080/'
+const courseGenUrl = 'http://localhost:8081/'
+const lessonContentUrl = 'http://localhost:8080/'
 
 export const generateFirstCoursePlan = (
     courseFirstOptions: CourseFirstOptions
@@ -82,8 +83,8 @@ export const updateCourseContent = (
 ): any => {
     return function (dispatch: any) {
         dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' })
-
-        fetch("http://localhost:8081", {
+        console.log("sending this course data", courseData)
+        fetch(lessonContentUrl, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
               "Content-Type": "application/json",
@@ -93,7 +94,8 @@ export const updateCourseContent = (
         .then(async (response) => {
             if (response.status !== 204) {
                 const data = await response.clone().json();
-                dispatch({ type: CourseActionTypes.UpdateCourseContent, content: data.courseContent, detailedPlan: data.detailedPlan });
+                console.log("received this response", data)
+                dispatch({ type: CourseActionTypes.UpdateCourseContent, content: data.courseContent, data: data.detailedCoursePlan });
                 return;
             }
             dispatch({ type: CourseActionTypes.CourseContentNotUpdated });
@@ -105,3 +107,11 @@ export const updateCourseContent = (
         });
     }
 }
+
+// If newProgressStatus is expected to be a number
+export const updateProgressStatus = (newProgressStatus: number) => ({
+    type: 'UpdateProgressStatus',
+    payload: newProgressStatus,
+});
+
+// If newProgressStatus could be another type, replace `number` with the appropriate type

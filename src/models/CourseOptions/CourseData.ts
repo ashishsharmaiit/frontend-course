@@ -4,6 +4,7 @@ export interface CourseContent {
     h1?: string;
     h2?: string;
     content?: string;
+    [key: string]: any; // or more specifically, string | undefined if all values are strings
 }
 
 export interface Lesson {
@@ -35,6 +36,6 @@ export interface CourseData {
     progressStatus?: number;
     detailedCoursePlan?: CoursePlan[]; // You should define a specific type for course_plan items
     courseOptions?: CourseOptions | null;
-    courseContent?: Record<string, CourseContent> | null;
+    courseContent?: CourseContent | null;
 }
 

@@ -5,6 +5,8 @@ export interface courseReducerProps {
     courseOptions: CourseOptions | null;
     courseContent: Record<string, CourseContent> | null;
     detailedCoursePlan: CoursePlan[];
+    courseId: string | null, 
+    progressStatus: number | 0,
     isCourseError: boolean;
     isCourseLoading: boolean;
 }
@@ -14,21 +16,24 @@ export enum CourseActionTypes {
     UpdateCoursePlan = "UpdateCoursePlan",
     UpdateCourseContent = "UpdateCourseContent",
     CoursePlanNotFound = "CoursePlanNotFound",
-    CourseContentNotUpdated = "CourseContentNotUpdated"
+    CourseContentNotUpdated = "CourseContentNotUpdated",
+    UpdateProgressStatus = "UpdateProgressStatus", // Add this line
 }
 
 export interface CourseAction {
     data: CoursePlan[];
-    detailedPlan: CoursePlan[];
-    content: Record<string, CourseContent> | null;
+    content: CourseContent | null;
     options: CourseOptions | null;
     type: CourseActionTypes;
+    payload?: number; // Add this line, assuming payload is a number
 }
 
 const initState: courseReducerProps = {
     detailedCoursePlan: [],
     courseOptions: null,
     courseContent: null,
+    courseId: null, 
+    progressStatus: 0,
     isCourseError: false,
     isCourseLoading: false
 }
@@ -65,22 +70,47 @@ const courseReducer = (state = initState, action: CourseAction) => {
                 isCourseError: true,
             }
         case CourseActionTypes.UpdateCourseContent:
-            return {
+            // Log the current state and action content before the update
+            console.log('Current state before UpdateCourseContent:', state);
+            console.log('Action received in UpdateCourseContent:', action);
+        
+            // Prepare the updated values but do not update the state yet
+            const updatedCourseContent = {
+                ...state.courseContent,
+                ...action.content,
+            };
+            const updatedDetailedCoursePlan = action.data !== undefined ? action.data : state.detailedCoursePlan;
+        
+            // Log the values that will be used to update the state
+            console.log('Updated courseContent:', updatedCourseContent);
+            console.log('Updated detailedCoursePlan:', updatedDetailedCoursePlan);
+        
+            // Now return the updated state
+            const newState = {
                 ...state,
-                courseContent: {
-                    ...state.courseContent,
-                    ...action.content
-                },
-                detailedCoursePlan: action.detailedPlan,
+                courseContent: updatedCourseContent,
+                detailedCoursePlan: updatedDetailedCoursePlan,
                 isCourseLoading: false,
-                isCourseError: true,
-            }
+                isCourseError: false, // Assuming you want to mark it as false if this action is successfully processed
+            };
+        
+            // Log the new state before actually returning it
+            console.log('New state after UpdateCourseContent:', newState);
+        
+            return newState;
+        
         case CourseActionTypes.CourseContentNotUpdated:
             return {
                 ...state,
                 isCourseLoading: false,
                 isCourseError: true,
             }
+        case 'UpdateProgressStatus':
+            return {
+                ...state,
+                progressStatus: action.payload,
+            };
+              
         default:
             return state
     }
