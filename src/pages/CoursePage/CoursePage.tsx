@@ -4,13 +4,10 @@ import {
     Box,
     Stack } from '@mui/material';
 import { useAppSelector } from "../../store";
-import { useDispatch } from "react-redux"
 import { CourseOptions } from "../../models/CourseOptions/CourseOptions";
-import { generateCoursePlan } from "../../actions/CourseActions";
 import MenuAppBar from "../../components/MenuAppBar/MenuAppBar";
 
 const CoursePage = () => {
-    const dispatch = useDispatch()
 
     const { detailedCoursePlan, courseOptions, isCourseLoading } = useAppSelector(state => state.courseReducer)
     const handleSubmit = async (courseOptions: CourseOptions) => {

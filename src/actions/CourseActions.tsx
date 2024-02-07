@@ -5,47 +5,58 @@ import { toast } from "react-toastify"
 
 const courseGenUrl = 'http://localhost:8081/'
 const lessonContentUrl = 'http://localhost:8080/'
+const welcomeUrl = 'http://localhost:8082/'
 
 export const generateFirstCoursePlan = (
     courseFirstOptions: CourseFirstOptions
 ): any => {
     return function (dispatch: any) {
+        console.log('Dispatching UpdateCoursePlan with options:', courseFirstOptions);
         dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: '', options: courseFirstOptions});
+        
+        console.log('Dispatching GenerateCoursePlan');
         dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' });
-        fetch(courseGenUrl, {
+        
+        console.log('Sending POST request to welcomeUrl with courseFirstOptions:', courseFirstOptions);
+        fetch(welcomeUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({"course_options": courseFirstOptions}),
+            body: JSON.stringify({"courseOptions": courseFirstOptions}),
         })
         .then(async (response) => {
-            if (response.status !== 204) {
-                const jsonResponse = await response.json(); // First, parse the response to JSON.
-                if(jsonResponse.error === null) {
-                    const detailedResponse = JSON.parse(jsonResponse.response); // Parse the stringified 'response' field to JSON.
-                    const { detailedCoursePlan, courseOptions } = detailedResponse; // Destructure the needed properties.
-                    console.log ("courseoptions",courseOptions);
+            console.log('Received response from welcomeUrl:', response);
+            if (response.ok) { // Checks if the response status is 2xx
+                const jsonResponse = await response.json();
+                console.log('Parsed JSON response:', jsonResponse);
+                
+                // Directly access courseContent without assuming an error field
+                if (jsonResponse && jsonResponse.courseContent) {
+                    console.log('Received courseContent:', jsonResponse.courseContent);
                     dispatch({ 
-                        type: CourseActionTypes.UpdateCoursePlan, 
-                        data: detailedCoursePlan, // Assuming 'data' should be the 'detailedCoursePlan'
-                        options: courseOptions // Assuming 'options' should be 'courseOptions'
+                        type: CourseActionTypes.UpdateCourseContent, 
+                        content: jsonResponse.courseContent,
                     });
                 } else {
-                    // Handle the case where there is an error in the jsonResponse
-                    console.error(jsonResponse.error);
-                    toast.error('Error in response');
+                    // Handle the case where courseContent is not as expected
+                    console.error('Unexpected JSON structure:', jsonResponse);
+                    toast.error('Unexpected response structure');
                     dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
                 }
-                return;
+            } else {
+                // Handle HTTP errors
+                console.error('HTTP error status:', response.status);
+                toast.error('Error fetching course plan');
+                dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
             }
-            dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
         })
         .catch((error) => {
-            console.error(error);
+            console.error('Fetch error:', error);
             toast.error('Error generating course plan');
             dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
         });
+        
     }
 };
 

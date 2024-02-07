@@ -33,7 +33,7 @@ const initState: courseReducerProps = {
     detailedCoursePlan: [],
     courseOptions: null,
     courseContent: null,
-    courseId: null, 
+    courseId: null,
     progressStatus: 0,
     isCourseError: false,
     isCourseLoading: false
@@ -42,11 +42,13 @@ const initState: courseReducerProps = {
 const courseReducer = (state = initState, action: CourseAction) => {
     switch (action.type) {
         case CourseActionTypes.GenerateCoursePlan:
+            console.log('Setting isCourseLoading to true');
             return {
                 ...state,
                 isCourseLoading: true,
                 isCourseError: false,
-            }
+            };
+        
 
         case CourseActionTypes.UpdateCoursePlan:
             console.log('Before update:', state.courseOptions, "actions.options", action.options);

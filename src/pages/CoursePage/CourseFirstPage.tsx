@@ -20,8 +20,8 @@ const SearchBar = ({setSearchQuery} : {setSearchQuery: (courseOptions: CourseFir
 
     const handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        setSearchQuery({topic: topic});
-    }
+        setSearchQuery({ topic: topic });
+        }
 
     return <form onSubmit={handleFormSubmit}>
         <TextField
@@ -66,7 +66,7 @@ const CourseFirstPage = () => {
                 courseFirstOptions
             )
         );
-        navigate("/course-page");
+        navigate("/welcome");
     };
     
     return (
