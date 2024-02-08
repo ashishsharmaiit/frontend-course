@@ -1,13 +1,19 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import { useAppSelector } from '../../store';
-
-
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom";
+import { updateProgressStatus } from "../../actions/CourseActions";
+import TextField from '@mui/material/TextField'; // Import TextField
 
 
 function DataDisplayPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
+  
   const { courseContent, progressStatus, isCourseLoading } = useAppSelector(state => state.courseReducer);
 
   console.log("Course Content:", courseContent);
@@ -17,19 +23,26 @@ function DataDisplayPage() {
   const progressState = (progressStatus ?? 0).toString();
   const content = courseContent ? courseContent[progressState] : undefined; // Ensure courseContent exists
 
-    console.log("Progress State:", progressState);
+  console.log("Progress State:", progressState);
   console.log("Content for current state:", content);
   
+  const handleContinue = () => {
+    const newProgressStatus = Math.min((progressStatus ?? 0) + 1, Object.keys(courseContent || {}).length);
+    console.log('New progress status:', newProgressStatus); 
+    dispatch(updateProgressStatus(newProgressStatus));
+    window.scrollTo(0, 0);
+    navigate("/lesson");
+  };
     
-    if (isCourseLoading) {
-      console.log("Content is loading...");
-      return <div>Loading...</div>;
-    }
-  
-    if (!content) {
-      console.log("No content found for progressState:", progressState);
-      return <div>No content found...</div>;
-    }
+  if (isCourseLoading) {
+    console.log("Content is loading...");
+    return <div>Loading...</div>;
+  }
+
+  if (!content) {
+    console.log("No content found for progressState:", progressState);
+    return <div>No content found...</div>;
+  }
   
     
   return (
@@ -46,6 +59,17 @@ function DataDisplayPage() {
         {content?.content && (
           <Typography style={{ whiteSpace: 'pre-wrap' }}>{content.content}</Typography>
         )}
+      </Box>
+      <Box textAlign="center" paddingBottom="50px">
+        <TextField
+          label="Your Feedback" // Label for the TextField
+          variant="outlined"
+          fullWidth
+          margin="normal"
+        />
+      </Box>
+      <Box textAlign="center" paddingTop="100px" display="flex" justifyContent="space-between">
+        <Button variant="contained" color="primary" onClick={handleContinue}>Start the Course</Button>
       </Box>
     </Container>
   );

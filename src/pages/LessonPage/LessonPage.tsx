@@ -38,15 +38,15 @@ function DataDisplayPage() {
     
   useEffect(() => {
     const shouldFetchData = () => {
-      const currentStateNumber = parseInt(progressState, 10);
-      const nextState = currentStateNumber + 1;
+      //const currentStateNumber = parseInt(progressState, 10);
+      //const nextState = currentStateNumber + 1;
       
       // Check if there's no content for the current state or if prefetching is needed for the next state.
       const isCurrentStateMissingContent = !courseContent || !courseContent[progressState];
-      const isNextStateMissingContent = !courseContent || !courseContent[nextState.toString()];
+      //const isNextStateMissingContent = !courseContent || !courseContent[nextState.toString()];
   
       // Fetch if content is missing for the current or next state, regardless of initialDataFetched.
-      return isCurrentStateMissingContent || isNextStateMissingContent;
+      return isCurrentStateMissingContent //|| isNextStateMissingContent;
     };
   
     if (shouldFetchData()) {

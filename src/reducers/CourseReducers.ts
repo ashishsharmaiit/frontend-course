@@ -51,7 +51,8 @@ const courseReducer = (state = initState, action: CourseAction) => {
         
 
         case CourseActionTypes.UpdateCoursePlan:
-            console.log('Before update:', state.courseOptions, "actions.options", action.options);
+            console.log('Before update course plan is:', state.detailedCoursePlan, "actions.data", action.data);
+            console.log('Before update course options is:', state.courseOptions, "actions.options", action.options);
             const updatedState = {
                 ...state,
                 detailedCoursePlan: action.data,
@@ -62,7 +63,8 @@ const courseReducer = (state = initState, action: CourseAction) => {
                 isCourseLoading: false,
                 isCourseError: false,
             };
-            console.log('After update:', updatedState.courseOptions);
+            console.log('After update: course plan is', updatedState.detailedCoursePlan);
+            console.log('After update: course options is', updatedState.courseOptions);
             return updatedState;
             
         case CourseActionTypes.CoursePlanNotFound:

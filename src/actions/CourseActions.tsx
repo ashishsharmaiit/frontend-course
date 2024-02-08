@@ -32,11 +32,15 @@ export const generateFirstCoursePlan = (
                 console.log('Parsed JSON response:', jsonResponse);
                 
                 // Directly access courseContent without assuming an error field
-                if (jsonResponse && jsonResponse.courseContent) {
+                if (jsonResponse && jsonResponse.courseContent && jsonResponse.detailedCoursePlan) {
                     console.log('Received courseContent:', jsonResponse.courseContent);
                     dispatch({ 
                         type: CourseActionTypes.UpdateCourseContent, 
                         content: jsonResponse.courseContent,
+                    });
+                    dispatch({ 
+                        type: CourseActionTypes.UpdateCoursePlan, 
+                        data: jsonResponse.detailedCoursePlan,
                     });
                 } else {
                     // Handle the case where courseContent is not as expected
@@ -106,7 +110,7 @@ export const updateCourseContent = (
             if (response.status !== 204) {
                 const data = await response.clone().json();
                 console.log("received this response", data)
-                dispatch({ type: CourseActionTypes.UpdateCourseContent, content: data.courseContent, data: data.detailedCoursePlan, id: data.courseId });
+                dispatch({ type: CourseActionTypes.UpdateCourseContent, content: data.courseContent, data: data.detailedCoursePlan });
                 return;
             }
             dispatch({ type: CourseActionTypes.CourseContentNotUpdated });
