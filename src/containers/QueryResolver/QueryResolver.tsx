@@ -47,7 +47,7 @@ export function QueryResolver() {
             // Directly access courseContent without assuming an error field
             if (jsonResponse && jsonResponse.response) {
                 console.log('Received response:', jsonResponse.response);
-                messages.push(createNewMessage(messageInput, false));
+                messages.push(createNewMessage(jsonResponse.response, false));
                 setMessages([...messages]);
             } else {
                 // Handle the case where courseContent is not as expected
