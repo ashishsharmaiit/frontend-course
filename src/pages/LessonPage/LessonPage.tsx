@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
-import Container from '@mui/material/Container';
+import {
+    Stack,
+    Container,
+} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../store';
 import { updateCourseContent, updateProgressStatus } from "../../actions/CourseActions";
-
-
-
+import { QueryResolver } from "../../containers/QueryResolver/QueryResolver";
 
 function DataDisplayPage() {
   const dispatch = useDispatch()
@@ -67,25 +68,28 @@ function DataDisplayPage() {
   
     
   return (
-    <Container maxWidth="md" style={{ paddingTop: '100px', paddingBottom: '50px' }}>
-      <Box textAlign="center" paddingBottom="50px">
-        {content?.h1 && (
-          <Typography variant="h3" gutterBottom>{content.h1}</Typography>
-        )}
-        {content?.h2 && (
-          <Typography variant="h5" gutterBottom>{content.h2}</Typography>
-        )}
-      </Box>
-      <Box textAlign="left" paddingBottom="50px">
-        {content?.content && (
-          <Typography style={{ whiteSpace: 'pre-wrap' }}>{content.content}</Typography>
-        )}
-      </Box>
-      <Box textAlign="right" paddingTop="50px" display="flex" justifyContent="space-between">
-        <Button variant="contained" color="primary" onClick={handlePrevious}>Previous</Button>
-        <Button variant="contained" color="primary" onClick={handleContinue}>Continue</Button>
-      </Box>
-    </Container>
+    <Stack direction="row" justifyContent="center" spacing={2}>
+        <Container maxWidth="md" style={{ paddingTop: '100px', paddingBottom: '50px' }}>
+            <Box textAlign="center" paddingBottom="50px">
+                {content?.h1 && (
+                <Typography variant="h3" gutterBottom>{content.h1}</Typography>
+                )}
+                {content?.h2 && (
+                <Typography variant="h5" gutterBottom>{content.h2}</Typography>
+                )}
+            </Box>
+            <Box textAlign="left" paddingBottom="50px">
+                {content?.content && (
+                <Typography style={{ whiteSpace: 'pre-wrap' }}>{content.content}</Typography>
+                )}
+            </Box>
+            <Box textAlign="right" paddingTop="50px" display="flex" justifyContent="space-between">
+                <Button variant="contained" color="primary" onClick={handlePrevious}>Previous</Button>
+                <Button variant="contained" color="primary" onClick={handleContinue}>Continue</Button>
+            </Box>
+        </Container>
+        <QueryResolver></QueryResolver>
+    </Stack>
   );
 };
 
