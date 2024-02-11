@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../store';
 import { updateCourseContent, updateProgressStatus } from "../../actions/CourseActions";
 import Button from '@mui/material/Button';
+import {
+  Stack,
+  Container,
+} from '@mui/material';
+import { QueryResolver } from "../../containers/QueryResolver/QueryResolver";
 
 function DataDisplayPage() {
   const dispatch = useDispatch()
@@ -52,6 +56,7 @@ function DataDisplayPage() {
     
 
   return (
+    <Stack direction="row" justifyContent="center" spacing={2}>
     <Container maxWidth="md" style={{ paddingTop: '100px', paddingBottom: '50px' }}>
       <Box textAlign="center" paddingBottom="50px">
         {content?.h1 && (
@@ -69,8 +74,12 @@ function DataDisplayPage() {
       <Box textAlign="right" paddingTop="50px" display="flex" justifyContent="space-between">
                 <Button variant="contained" color="primary" onClick={handlePrevious}>Previous</Button>
                 <Button variant="contained" color="primary" onClick={handleContinue}>Continue</Button>
-        </Box>
-    </Container>
+            </Box>
+        </Container>
+        <Container style={{ paddingTop: '100px', paddingBottom: '50px' }}>
+            <QueryResolver></QueryResolver>
+        </Container>
+    </Stack>
   );
 
 }

@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import {
+    Box,
+    TextField,
+    Typography,
+    Grid,
+    Paper,
+    IconButton,
+} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import { useAppSelector } from '../../store';
 
 export class MessageDto {
@@ -66,82 +74,108 @@ export function QueryResolver() {
     };
 
     return (
-        <ChatContainer>
-            <ChatWrapper>
-              {
-                messages.length > 0 && messages.map((message, index) => (
-                  <div key={index} style={{ background: message.isUser ? "FFFFFF" : "#000000", padding: "12px", marginBottom: "12px" }}>
-                    {message.content.split("\n").map((text, index) => (
-                      message.isUser ?
-                        <div key={index}>
-                          {text}
-                          <br key={index} />
-                        </div> :
-                        <div key={index} className="assistant">
-                          <pre>{text}</pre>
-                        </div>
-                    ))}
-                  </div>
-                ))}
-            </ChatWrapper>
-            <div className='inputWrapper'>
-              <FormItem style={{ marginBottom: "0px", marginRight: "12px" }}>
-                <input name="message" value={messageInput} onChange={(e) => setMessageInput(e.target.value)} disabled={isWaiting} />
-                <SendButton onClick={sendMessage} disabled={isWaiting}>Send</SendButton>
-              </FormItem>
-            </div>
-        </ChatContainer>
-    );
-}
+        <Box
+          sx={{
+            border: 0.1,
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: "10px",
+            bgcolor: "#F9F9F9",
+          }}
+        >
+          <Box sx={{ borderBottom: 0.1, p: 2, backgroundColor: "#F9F9F9", borderRadius: "10px 10px 0px 0px"}}>
+            <Typography gutterBottom component="div" sx={{
+                    color: "#000",
+                    fontSize: "21px",
+                    fontWeight: "400",
+                    paddingLeft: "8px"
+                }}>
+                Query Resolver
+            </Typography>
+          </Box>
+          <Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
+            {messages.map((message, index) => (
+              <Message key={index} message={message} />
+            ))}
+          </Box>
+          <Box sx={{ borderTop: 0.1, p: 2, backgroundColor: "#F9F9F9", borderRadius: "0px 0px 10px 10px"}}>
+            <Grid container spacing={2}>
+              <Grid item xs={10}>
+                <TextField
+                  size="small"
+                  fullWidth
+                  placeholder="Ask your query here"
+                  variant="standard"
+                  value={messageInput}
+                  InputProps={{ disableUnderline: true }}
+                  onChange={(e) => setMessageInput(e.target.value)} 
+                  disabled={isWaiting}
+                  sx={{
+                    fontSize: "20px",
+                    bgcolor: "#E1E1E1",
+                    borderRadius: "10px",
+                    marginLeft: "2px",
+                    paddingLeft: "8px",
+                    paddingRight: "2px"
+                }}/>
+              </Grid>
+              <Grid item xs={2}>
+                <IconButton
+                    color="primary"
+                    onClick={sendMessage} 
+                    disabled={isWaiting}
+                >
+                    <SendIcon style={{
+                        color: "#0072EF", 
+                        fontSize: "27px", 
+                        fontWeight: "700"}}>
+                    </SendIcon>
+                </IconButton>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      );
+};
 
-const ChatContainer = styled.div`
-  flex: 3;
-  position: relative;
-  height: calc(100vh - 60px);
-  .inputWrapper {
-    position: sticky;
-    bottom: 0;
-    right: 20px;
-    width: 100%;
-    left: 0;
-  }
-`
-
-const FormItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
-  textarea, select, input {
-    padding: 1rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-family: inherit;
-  }
-`
-
-const SendButton = styled.button`
-  padding: 10px 15px;
-  background-color: #f44336;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: auto;
-  &:hover {
-    background-color: #d32f2f;
-  }
-`
-
-const ChatWrapper = styled.div`
-  height: calc(100vh - 170px);
-  overflow-y: auto;
-  .assistant {
-    pre {
-      color: #FFFFFF;
-      white-space: pre-wrap;
-    }
-  }
+const Message = ({ message } : {message : MessageDto}) => {
+    const isBot = !message.isUser;
   
-`
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: isBot ? "flex-start" : "flex-end",
+          mb: 2,
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isBot ? "row" : "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              ml: isBot ? 1 : 0,
+              mr: isBot ? 0 : 1,
+              backgroundColor: isBot ? "#0072EF" : "#E1E1E1",
+              borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
+            }}
+          >
+            {message.content.split("\n").map((text, index) => (
+                <Typography key={index} variant="body1" sx={{
+                    color: isBot ? "#FFF" : "#000"
+                }}>
+                    {text}
+                </Typography>
+            ))}
+          </Paper>
+        </Box>
+      </Box>
+    );
+};
