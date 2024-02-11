@@ -1,4 +1,4 @@
-import { CourseContent, CoursePlan } from "../models/CourseOptions/CourseData";
+import { CourseContent, CoursePlan, Progress } from "../models/CourseOptions/CourseData";
 import { CourseOptions } from "../models/CourseOptions/CourseOptions";
 
 export interface courseReducerProps {
@@ -6,7 +6,7 @@ export interface courseReducerProps {
     courseContent: Record<string, CourseContent> | null;
     detailedCoursePlan: CoursePlan[];
     courseId: string | null, 
-    progressStatus: number | 0,
+    progressStatus: Progress[] | null,
     isCourseError: boolean;
     isCourseLoading: boolean;
 }
@@ -25,7 +25,7 @@ export interface CourseAction {
     content: CourseContent | null;
     options: CourseOptions | null;
     type: CourseActionTypes;
-    payload?: number; // Add this line, assuming payload is a number
+    payload?: Progress[] | null; // Add this line, assuming payload is a number
     id: string | null;
 }
 
@@ -34,7 +34,7 @@ const initState: courseReducerProps = {
     courseOptions: null,
     courseContent: null,
     courseId: null,
-    progressStatus: 0,
+    progressStatus: null,
     isCourseError: false,
     isCourseLoading: false
 }
@@ -112,11 +112,21 @@ const courseReducer = (state = initState, action: CourseAction) => {
                 isCourseLoading: false,
                 isCourseError: true,
             }
-        case 'UpdateProgressStatus':
-            return {
-                ...state,
-                progressStatus: action.payload,
-            };
+            case CourseActionTypes.UpdateProgressStatus:
+                // Log the current state and the incoming payload before the update
+                console.log('Current progressStatus:', state.progressStatus);
+                console.log('Updating progressStatus with payload:', action.payload);
+            
+                const updatedState4 = {
+                    ...state,
+                    progressStatus: action.payload,
+                };
+            
+                // Log the updated state
+                console.log('Updated progressStatus:', updatedState4.progressStatus);
+            
+                return updatedState4;
+            
               
         default:
             return state

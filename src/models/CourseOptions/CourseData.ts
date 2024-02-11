@@ -4,38 +4,43 @@ export interface CourseContent {
     h1?: string;
     h2?: string;
     content?: string;
-    [key: string]: any; // or more specifically, string | undefined if all values are strings
+    [key: string]: any; // Consider specifying more precise types if possible
 }
 
 export interface Lesson {
-    content: string;
-    lessonTitle: string;
-    uniqueLessonId: number;
+    lesson_name: string;
+    lesson_topics: string;
 }
 
-export interface Chapter {
+
+
+export interface Subsection {
+    subsection: string;
     lessons: Lesson[];
-    chapterTitle: string;
 }
 
 export interface LessonPlan {
-    chapters: Chapter[];
+    subsection: Subsection[]; // Adjusted to use the Subsection interface
 }
 
 export interface CoursePlan {
     sectionName: string;
     sectionTime: string;
-    sectionNumber: number;
     sectionTopics: string;
+    sectionDetails: string;
     sectionObjective: string;
-    lessonPlan?: LessonPlan;
+    lessonPlan?: LessonPlan[]; // Adjusted to be an array of LessonPlan to match the detailed structure
 }
 
 export interface CourseData {
     courseId?: string;
-    progressStatus?: number;
-    detailedCoursePlan?: CoursePlan[]; // You should define a specific type for course_plan items
+    progressStatus?: Progress [] | null;
+    detailedCoursePlan?: CoursePlan[];
     courseOptions?: CourseOptions | null;
     courseContent?: CourseContent | null;
 }
 
+export interface Progress {
+    sectionId: number;
+    lessonId: number;
+}

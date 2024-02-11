@@ -20,16 +20,12 @@ function DataDisplayPage() {
   console.log("Progress Status:", progressStatus);
   console.log("Is Course Loading:", isCourseLoading);
   
-  const progressState = (progressStatus ?? 0).toString();
-  const content = courseContent ? courseContent[progressState] : undefined; // Ensure courseContent exists
+  const content = courseContent ? courseContent["-1.-1"] : undefined; // Ensure courseContent exists
 
-  console.log("Progress State:", progressState);
   console.log("Content for current state:", content);
   
   const handleContinue = () => {
-    const newProgressStatus = Math.min((progressStatus ?? 0) + 1, Object.keys(courseContent || {}).length);
-    console.log('New progress status:', newProgressStatus); 
-    dispatch(updateProgressStatus(newProgressStatus));
+    dispatch(updateProgressStatus([{ sectionId: 0, lessonId: -1 }]));
     window.scrollTo(0, 0);
     navigate("/lesson");
   };
@@ -40,7 +36,7 @@ function DataDisplayPage() {
   }
 
   if (!content) {
-    console.log("No content found for progressState:", progressState);
+    console.log("No content found for progressState:", -1);
     return <div>No content found...</div>;
   }
   

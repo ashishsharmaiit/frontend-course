@@ -1,4 +1,4 @@
-import { CourseData } from "../models/CourseOptions/CourseData";
+import { CourseData, Progress } from "../models/CourseOptions/CourseData";
 import { CourseOptions, CourseFirstOptions } from "../models/CourseOptions/CourseOptions";
 import { CourseActionTypes } from "../reducers/CourseReducers";
 import { toast } from "react-toastify"
@@ -124,9 +124,15 @@ export const updateCourseContent = (
 }
 
 // If newProgressStatus is expected to be a number
-export const updateProgressStatus = (newProgressStatus: number) => ({
-    type: 'UpdateProgressStatus',
-    payload: newProgressStatus,
-});
+// Assuming `updateProgressStatus` should always receive an array of Progress objects
+export const updateProgressStatus = (newProgressStatus: Progress[]) => {
+    console.log('Dispatching UpdateProgressStatus action with payload:', newProgressStatus);
+    return {
+        type: 'UpdateProgressStatus',
+        payload: newProgressStatus,
+    };
+};
+
+
 
 // If newProgressStatus could be another type, replace `number` with the appropriate type
