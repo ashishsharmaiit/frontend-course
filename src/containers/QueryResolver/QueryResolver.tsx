@@ -13,7 +13,7 @@ export class MessageDto {
 }
 
 export function QueryResolver() {
-    const { courseContent } = useAppSelector(state => state.courseReducer);
+    const { progressStatus, courseContent } = useAppSelector(state => state.courseReducer);
 
     const [messageInput, setMessageInput] = useState("")
 
@@ -32,12 +32,16 @@ export function QueryResolver() {
         messages.push(createNewMessage(messageInput, true));
         setMessages([...messages]);
 
-        const response = await fetch('http://localhost:8083/', {
+        const progressState = (progressStatus ?? 0).toString()
+
+        const content = courseContent ? courseContent[progressState] : {}
+
+        const response = await fetch('http://localhost:8080/', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({course_content: courseContent, query: messageInput}), // body data type must match "Content-Type" header
+            body: JSON.stringify({course_content: content, query: messageInput}), // body data type must match "Content-Type" header
         });
 
         if (response.ok) { // Checks if the response status is 2xx
