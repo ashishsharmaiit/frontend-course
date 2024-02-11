@@ -33,7 +33,16 @@
   "pathMappings": {},
   "nxJsonPlugins": [],
   "fileMap": {
-    "nonProjectFiles": [],
+    "nonProjectFiles": [
+      {
+        "file": "src/pages/LessonPage/LessonPage.tsx",
+        "hash": "13166667557161412050"
+      },
+      {
+        "file": "src/containers/QueryResolver/QueryResolver.tsx",
+        "hash": "3452884105080302928"
+      }
+    ],
     "projectFileMap": {
       "react-app": [
         {
