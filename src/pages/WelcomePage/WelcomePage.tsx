@@ -103,6 +103,15 @@ function DataDisplayPage() {
   })();
   
   const handleEnterBackground = () => {
+    if (contentKey === "-1.-4") {
+      // Update progressStatus to the initial course state, `0.-1`
+      dispatch(updateProgressStatus([{ sectionId: 0, lessonId: -1 }]));
+  
+      // Navigate to the course start page or the first lesson
+      navigate('/lesson'); // Adjust the path as needed for your application
+  
+      // Optionally, reset any state or perform additional setup here
+    } else {
     if (shouldUpdatedurationInHours) {
       const updatedOptions = { durationInHours: durationInHours };
       dispatch(updateCourseOptions(updatedOptions));
@@ -122,6 +131,7 @@ function DataDisplayPage() {
     // Reset the input field by updating the key
     setBackground(''); // Clear the background state
     setInputKey(Date.now()); // Update the key to force re-render of the TextField
+  }
   };
   
 

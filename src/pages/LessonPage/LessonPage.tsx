@@ -77,9 +77,9 @@ function DataDisplayPage() {
                 <Button variant="contained" color="primary" onClick={handleContinue}>Continue</Button>
             </Box>
         </Container>
-        <Container style={{ paddingTop: '100px', paddingBottom: '50px' }}>
+        {/*<Container style={{ paddingTop: '100px', paddingBottom: '50px' }}>
             <QueryResolver></QueryResolver>
-        </Container>
+        </Container>*/}
     </Stack>
   );
 
