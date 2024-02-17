@@ -10,12 +10,12 @@ import {
 } from '@mui/material';
 import { useDispatch } from "react-redux"
 import SearchIcon from "@mui/icons-material/Search";
-import { CourseFirstOptions } from "../../models/CourseOptions/CourseOptions";
+import { CourseOptions } from "../../models/CourseOptions/CourseOptions";
 import { generateFirstCoursePlan } from "../../actions/CourseActions";
 import MenuAppBar from "../../components/MenuAppBar/MenuAppBar";
 
 
-const SearchBar = ({setSearchQuery} : {setSearchQuery: (courseOptions: CourseFirstOptions) => void}) => {
+const SearchBar = ({setSearchQuery} : {setSearchQuery: (courseOptions: CourseOptions) => void}) => {
     const [topic, setTopic] = React.useState('');
 
     const handleFormSubmit = (event: React.FormEvent) => {
@@ -60,10 +60,10 @@ const CourseFirstPage = () => {
 
     const dispatch = useDispatch()
 
-    const handleSubmit = async (courseFirstOptions: CourseFirstOptions) => {
+    const handleSubmit = async (courseOptions: CourseOptions) => {
         await dispatch(
             generateFirstCoursePlan(
-                courseFirstOptions
+                courseOptions
             )
         );
         navigate("/welcome");

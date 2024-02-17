@@ -1,5 +1,5 @@
 import { CourseData, Progress } from "../models/CourseOptions/CourseData";
-import { CourseOptions, CourseFirstOptions } from "../models/CourseOptions/CourseOptions";
+import { CourseOptions } from "../models/CourseOptions/CourseOptions";
 import { CourseActionTypes } from "../reducers/CourseReducers";
 import { toast } from "react-toastify"
 
@@ -8,22 +8,22 @@ const lessonContentUrl = 'http://localhost:8080/'
 const welcomeUrl = 'http://localhost:8082/'
 
 export const generateFirstCoursePlan = (
-    courseFirstOptions: CourseFirstOptions
+    courseOptions: CourseOptions
 ): any => {
     return function (dispatch: any) {
-        console.log('Dispatching UpdateCoursePlan with options:', courseFirstOptions);
-        dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: '', options: courseFirstOptions});
+        console.log('Dispatching UpdateCoursePlan with options:', courseOptions);
+        dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: '', options: courseOptions});
         
         console.log('Dispatching GenerateCoursePlan');
         dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' });
         
-        console.log('Sending POST request to welcomeUrl with courseFirstOptions:', courseFirstOptions);
+        console.log('Sending POST request to welcomeUrl with courseFirstOptions:', courseOptions);
         fetch(welcomeUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({"courseOptions": courseFirstOptions}),
+            body: JSON.stringify({"courseOptions": courseOptions}),
         })
         .then(async (response) => {
             console.log('Received response from welcomeUrl:', response);
@@ -32,15 +32,11 @@ export const generateFirstCoursePlan = (
                 console.log('Parsed JSON response:', jsonResponse);
                 
                 // Directly access courseContent without assuming an error field
-                if (jsonResponse && jsonResponse.courseContent && jsonResponse.detailedCoursePlan) {
+                if (jsonResponse && jsonResponse.courseContent) {
                     console.log('Received courseContent:', jsonResponse.courseContent);
                     dispatch({ 
                         type: CourseActionTypes.UpdateCourseContent, 
                         content: jsonResponse.courseContent,
-                    });
-                    dispatch({ 
-                        type: CourseActionTypes.UpdateCoursePlan, 
-                        data: jsonResponse.detailedCoursePlan,
                     });
                 } else {
                     // Handle the case where courseContent is not as expected
@@ -132,6 +128,12 @@ export const updateProgressStatus = (newProgressStatus: Progress[]) => {
         payload: newProgressStatus,
     };
 };
+
+// Assuming this action creator exists or you create a new one like this
+export const updateCourseOptions = (options: Partial<CourseOptions>) => ({
+    type: CourseActionTypes.UpdateCoursePlan,
+    options,
+});
 
 
 

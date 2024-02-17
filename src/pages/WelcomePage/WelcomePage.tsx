@@ -7,28 +7,107 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import { updateProgressStatus } from "../../actions/CourseActions";
 import TextField from '@mui/material/TextField'; // Import TextField
+import React, { useState } from 'react';
+import { updateCourseOptions, generateFirstCoursePlan } from '../../actions/CourseActions'; // Adjust the import path as needed
+import { useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown
 
 
 function DataDisplayPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const [inputKey, setInputKey] = useState(Date.now());
 
-  
-  const { courseContent, progressStatus, isCourseLoading } = useAppSelector(state => state.courseReducer);
+
+  const { courseOptions, courseContent, progressStatus, isCourseLoading } = useAppSelector(state => state.courseReducer);
+  const [background, setBackground] = useState('');
+  const [purposeOfLearning, setpurposeOfLearning] = useState('');
+  const [durationInHours, setdurationInHours] = useState('');
+
+
+  const shouldUpdatePurpose = courseOptions?.background;
+  const shouldUpdatedurationInHours = courseOptions?.purposeOfLearning;
+
 
   console.log("Course Content:", courseContent);
   console.log("Progress Status:", progressStatus);
   console.log("Is Course Loading:", isCourseLoading);
   
-  const content = courseContent ? courseContent["-1.-1"] : undefined; // Ensure courseContent exists
+  const { sectionId, lessonId } = progressStatus?.[0] ?? { sectionId: -1, lessonId: -1 };
+
+  const contentKey = `${sectionId}.${lessonId}`;
+  const content = courseContent ? courseContent[contentKey] : undefined;
 
   console.log("Content for current state:", content);
-  
-  const handleContinue = () => {
-    dispatch(updateProgressStatus([{ sectionId: 0, lessonId: -1 }]));
-    window.scrollTo(0, 0);
-    navigate("/lesson");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (shouldUpdatedurationInHours) {
+      setdurationInHours(value);
+    } else if (shouldUpdatePurpose) {
+      setpurposeOfLearning(value);
+    } else {
+      setBackground(value);
+    }
   };
+
+  const textFieldProps = (() => {
+    if (shouldUpdatedurationInHours) {
+      return {
+        label: "Duration in Hours",
+        value: durationInHours,
+      };
+    } else if (shouldUpdatePurpose) {
+      return {
+        label: "Purpose Of Learning",
+        value: purposeOfLearning,
+      };
+    } else {
+      return {
+        label: "Your background",
+        value: background,
+      };
+    } 
+  })();
+  
+  const handleEnterBackground = () => {
+    if (shouldUpdatedurationInHours) {
+      const updatedOptions = { durationInHours: durationInHours };
+      dispatch(updateCourseOptions(updatedOptions));
+    }
+    else if (shouldUpdatePurpose) {
+      const updatedOptions = { purposeOfLearning: purposeOfLearning };
+      dispatch(updateCourseOptions(updatedOptions));
+    } else {
+      const updatedOptions = { background: background };
+      dispatch(updateCourseOptions(updatedOptions));
+    }
+
+    let nextLessonId = lessonId - 1;
+    dispatch(updateProgressStatus([{ sectionId: sectionId, lessonId: nextLessonId }]));
+    window.scrollTo(0, 0);
+    
+    // Reset the input field by updating the key
+    setBackground(''); // Clear the background state
+    setInputKey(Date.now()); // Update the key to force re-render of the TextField
+  };
+  
+
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    // Skip the effect on initial mount, only run on courseOptions changes afterwards
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else if (courseOptions !== null && !isCourseLoading) {
+      // Since it's not the initial mount and courseOptions is not null, dispatch the action
+      dispatch(generateFirstCoursePlan(courseOptions));
+    } else {
+      console.error("courseOptions is null, cannot generate first course plan.");
+    }
+  }, [dispatch, courseOptions]); // Dependency array remains unchanged
+
+
     
   if (isCourseLoading) {
     console.log("Content is loading...");
@@ -36,7 +115,7 @@ function DataDisplayPage() {
   }
 
   if (!content) {
-    console.log("No content found for progressState:", -1);
+    console.log("No content found for contentKey:", contentKey);
     return <div>No content found...</div>;
   }
   
@@ -51,22 +130,38 @@ function DataDisplayPage() {
           <Typography variant="h5" gutterBottom>{content.h2}</Typography>
         )}
       </Box>
-      <Box textAlign="left" paddingBottom="50px">
+      <Box textAlign="left" paddingBottom="20px">
         {content?.content && (
-          <Typography style={{ whiteSpace: 'pre-wrap' }}>{content.content}</Typography>
+            <ReactMarkdown>{content.content}</ReactMarkdown>
+            )}
+      </Box>
+
+        <Box textAlign="center" paddingBottom="10px">
+        {contentKey !== "-1.-4" && (
+          <TextField
+            key={inputKey}
+            label={textFieldProps.label}
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            multiline
+            rows={2}
+            value={textFieldProps.value}
+            onChange={handleInputChange}
+          />
         )}
       </Box>
-      <Box textAlign="center" paddingBottom="50px">
-        <TextField
-          label="Your Feedback" // Label for the TextField
-          variant="outlined"
-          fullWidth
-          margin="normal"
-        />
+
+            <Box textAlign="center" paddingTop="1px" display="flex" justifyContent="center">
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={handleEnterBackground}>
+          {contentKey === "-1.-4" ? "Start the Course" : "Submit"}
+        </Button>
       </Box>
-      <Box textAlign="center" paddingTop="100px" display="flex" justifyContent="space-between">
-        <Button variant="contained" color="primary" onClick={handleContinue}>Start the Course</Button>
-      </Box>
+
+
     </Container>
   );
 };

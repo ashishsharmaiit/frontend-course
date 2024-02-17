@@ -10,6 +10,7 @@ import {
   Container,
 } from '@mui/material';
 import { QueryResolver } from "../../containers/QueryResolver/QueryResolver";
+import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown
 
 function DataDisplayPage() {
   const dispatch = useDispatch()
@@ -68,8 +69,8 @@ function DataDisplayPage() {
       </Box>
       <Box textAlign="left" paddingBottom="50px">
         {content?.content && (
-          <Typography style={{ whiteSpace: 'pre-wrap' }}>{content.content}</Typography>
-        )}
+            <ReactMarkdown>{content.content}</ReactMarkdown>
+            )}
       </Box>
       <Box textAlign="right" paddingTop="50px" display="flex" justifyContent="space-between">
                 <Button variant="contained" color="primary" onClick={handlePrevious}>Previous</Button>
