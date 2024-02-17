@@ -18,6 +18,7 @@ export enum CourseActionTypes {
     CoursePlanNotFound = "CoursePlanNotFound",
     CourseContentNotUpdated = "CourseContentNotUpdated",
     UpdateProgressStatus = "UpdateProgressStatus", // Add this line
+    UpdateOnlyCoursePlan = "UpdateOnlyCoursePlan",
 }
 
 export interface CourseAction {
@@ -72,6 +73,17 @@ const courseReducer = (state = initState, action: CourseAction) => {
             console.log('After update: course plan is', updatedState.detailedCoursePlan);
             console.log('After update: course options is', updatedState.courseOptions);
             return updatedState;
+
+        case CourseActionTypes.UpdateOnlyCoursePlan:
+            console.log('Before update course plan is:', state.detailedCoursePlan, "actions.data", action.data);
+            const updatedState5 = {
+                ...state,
+                detailedCoursePlan: action.data,
+                isCourseLoading: false,
+                isCourseError: false,
+            };
+            console.log('After update: course plan is', updatedState5.detailedCoursePlan);
+            return updatedState5;
             
         case CourseActionTypes.CoursePlanNotFound:
             return {

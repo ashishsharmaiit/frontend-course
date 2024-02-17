@@ -1,9 +1,9 @@
-import { CourseData, Progress } from "../models/CourseOptions/CourseData";
+import { CoursePlan, CourseContent, CourseData, Progress } from "../models/CourseOptions/CourseData";
 import { CourseOptions } from "../models/CourseOptions/CourseOptions";
 import { CourseActionTypes } from "../reducers/CourseReducers";
 import { toast } from "react-toastify"
 
-const courseGenUrl = 'http://localhost:8081/'
+const courseGenUrl = 'http://localhost:8084/'
 const lessonContentUrl = 'http://localhost:8080/'
 const welcomeUrl = 'http://localhost:8082/'
 
@@ -61,23 +61,50 @@ export const generateFirstCoursePlan = (
 };
 
 export const generateCoursePlan = (
-    courseOptions: CourseOptions
+    courseOptions: CourseOptions, courseContent: CourseContent, detailedCoursePlan: CoursePlan[]
 ): any => {
     return function (dispatch: any) {
-        dispatch({ type: CourseActionTypes.GenerateCoursePlan, data: '' })
+        console.log('getting course plan with below inputs:', courseOptions, 'and ', courseContent, 'and', detailedCoursePlan);
 
         fetch(courseGenUrl, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({"course_options": courseOptions}), // body data type must match "Content-Type" header
+            body: JSON.stringify({"courseOptions": courseOptions, "courseContent": courseContent, "detailedCoursePlan": detailedCoursePlan}), // body data type must match "Content-Type" header
         })
         .then(async (response) => {
             if (response.status !== 204) {
                 const data = await response.clone().json();
-                dispatch({ type: CourseActionTypes.UpdateCoursePlan, data: data.plan, options: data.options });
-                return;
+                console.log("received data", data);
+
+                let parsedData;
+                if (typeof data === "string") {
+                    try {
+                        parsedData = JSON.parse(data);
+                    } catch (error) {
+                        console.error("Error parsing JSON string:", error);
+                        // Handle the error (e.g., set parsedData to null or an empty object)
+                        parsedData = {}; // or null, depending on how you want to handle this case
+                    }
+                } else {
+                    // If `data` is already an object, use it directly
+                    parsedData = data;
+                }
+                
+                console.log("Parsed data", parsedData);
+                console.log("type of data", typeof parsedData);
+                console.log("Trying to access detailedCoursePlan directly:", parsedData['detailedCoursePlan']);
+                
+                const detailedCoursePlan = parsedData.detailedCoursePlan;
+                
+                console.log("detailedCoursePlan", detailedCoursePlan);
+                                
+                dispatch({
+                    type: CourseActionTypes.UpdateOnlyCoursePlan,
+                    data: detailedCoursePlan, // Assuming your reducer expects 'data' to contain the detailedCoursePlan
+                });
+                    return;
             }
             dispatch({ type: CourseActionTypes.CoursePlanNotFound, data: '' });
         })

@@ -7,28 +7,17 @@ export interface CourseContent {
     [key: string]: any; // Consider specifying more precise types if possible
 }
 
-export interface Lesson {
-    lesson_name: string;
-    lesson_topics: string;
-}
-
-
-
-export interface Subsection {
-    subsection: string;
-    lessons: Lesson[];
-}
 
 export interface LessonPlan {
-    subsection: Subsection[]; // Adjusted to use the Subsection interface
+    lessonName: string; 
+    lessonTopics: string; 
 }
 
 export interface CoursePlan {
-    sectionName: string;
-    sectionTime: string;
-    sectionTopics: string;
-    sectionDetails: string;
-    sectionObjective: string;
+    sectionName?: string;
+    sectionTime?: string;
+    sectionTopics?: string;
+    sectionObjective?: string;
     lessonPlan?: LessonPlan[]; // Adjusted to be an array of LessonPlan to match the detailed structure
 }
 

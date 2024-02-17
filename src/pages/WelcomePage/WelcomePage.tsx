@@ -5,10 +5,9 @@ import Button from '@mui/material/Button';
 import { useAppSelector } from '../../store';
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom";
-import { updateProgressStatus } from "../../actions/CourseActions";
 import TextField from '@mui/material/TextField'; // Import TextField
 import React, { useState } from 'react';
-import { updateCourseOptions, generateFirstCoursePlan } from '../../actions/CourseActions'; // Adjust the import path as needed
+import { updateCourseOptions, generateFirstCoursePlan, generateCoursePlan, updateProgressStatus } from '../../actions/CourseActions'; // Adjust the import path as needed
 import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown
 
@@ -19,7 +18,7 @@ function DataDisplayPage() {
   const [inputKey, setInputKey] = useState(Date.now());
 
 
-  const { courseOptions, courseContent, progressStatus, isCourseLoading } = useAppSelector(state => state.courseReducer);
+  const { courseOptions, courseContent, detailedCoursePlan, progressStatus, isCourseLoading } = useAppSelector(state => state.courseReducer);
   const [background, setBackground] = useState('');
   const [purposeOfLearning, setpurposeOfLearning] = useState('');
   const [durationInHours, setdurationInHours] = useState('');
@@ -50,6 +49,39 @@ function DataDisplayPage() {
       setBackground(value);
     }
   };
+
+  useEffect(() => {
+    if (contentKey === "-1.-4" && courseContent && courseContent[contentKey] && courseOptions!= null) {
+      // Assuming courseOptions is available in your component's state or props
+      const currentCourseOptions = courseOptions; // Ensure this is correctly sourced
+      const currentCourseContent = courseContent; // Specific content for -1.-4
+      const currentdetailedCoursePlan = detailedCoursePlan; // Specific content for -1.-4
+
+      // Dispatch the generateCoursePlan action with currentCourseOptions and currentCourseContent
+      dispatch(generateCoursePlan(currentCourseOptions, currentCourseContent, currentdetailedCoursePlan));
+    }
+  }, [contentKey, courseContent, dispatch]); // Add dispatch to the dependency array if it's not stable
+  
+  
+  useEffect(() => {
+// Assuming detailedCoursePlan is already defined and populated as shown above
+    if (detailedCoursePlan && detailedCoursePlan.length > 0 && courseOptions!= null  && courseContent) {
+      // Check if the first item in detailedCoursePlan has the lessonPlan property
+      if (!detailedCoursePlan[0].hasOwnProperty('lessonPlan')) {
+        const currentCourseOptions = courseOptions; // Ensure this is correctly sourced
+        const currentCourseContent = courseContent; // Specific content for -1.-4
+        const currentdetailedCoursePlan = detailedCoursePlan; // Specific content for -1.-4
+  
+        dispatch(generateCoursePlan(currentCourseOptions, currentCourseContent, currentdetailedCoursePlan));
+        } else {
+          console.log("lessonPlan variable exists in the first index of detailedCoursePlan.");
+      }
+    } else {
+      console.log("detailedCoursePlan is empty or not defined.");
+    }
+  }, [detailedCoursePlan, dispatch]); // Add dispatch to the dependency array if it's not stable
+
+
 
   const textFieldProps = (() => {
     if (shouldUpdatedurationInHours) {
