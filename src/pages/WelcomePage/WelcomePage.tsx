@@ -51,7 +51,7 @@ function DataDisplayPage() {
   };
 
   useEffect(() => {
-    if (contentKey === "-1.-4" && courseContent && courseContent[contentKey] && courseOptions!= null) {
+    if (contentKey === "-1.2" && courseContent && courseContent[contentKey] && courseOptions!= null) {
       // Assuming courseOptions is available in your component's state or props
       const currentCourseOptions = courseOptions; // Ensure this is correctly sourced
       const currentCourseContent = courseContent; // Specific content for -1.-4
@@ -103,7 +103,7 @@ function DataDisplayPage() {
   })();
   
   const handleEnterBackground = () => {
-    if (contentKey === "-1.-4") {
+    if (contentKey === "-1.2") {
       // Update progressStatus to the initial course state, `0.-1`
       dispatch(updateProgressStatus([{ sectionId: 0, lessonId: -1 }]));
   
@@ -124,7 +124,7 @@ function DataDisplayPage() {
       dispatch(updateCourseOptions(updatedOptions));
     }
 
-    let nextLessonId = lessonId - 1;
+    let nextLessonId = lessonId + 1;
     dispatch(updateProgressStatus([{ sectionId: sectionId, lessonId: nextLessonId }]));
     window.scrollTo(0, 0);
     
@@ -179,7 +179,7 @@ function DataDisplayPage() {
       </Box>
 
         <Box textAlign="center" paddingBottom="10px">
-        {contentKey !== "-1.-4" && (
+        {contentKey !== "-1.2" && (
           <TextField
             key={inputKey}
             label={textFieldProps.label}
@@ -199,7 +199,7 @@ function DataDisplayPage() {
           variant="contained" 
           color="primary" 
           onClick={handleEnterBackground}>
-          {contentKey === "-1.-4" ? "Start the Course" : "Submit"}
+          {contentKey === "-1.2" ? "Start the Course" : "Submit"}
         </Button>
       </Box>
 
