@@ -9,7 +9,7 @@ import {
   Stack,
   Container,
 } from '@mui/material';
-import { QueryResolver } from "../../containers/QueryResolver/QueryResolver";
+/*import { QueryResolver } from "../../containers/QueryResolver/QueryResolver";*/
 import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown
 
 function DataDisplayPage() {

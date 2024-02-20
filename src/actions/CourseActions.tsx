@@ -3,9 +3,17 @@ import { CourseOptions } from "../models/CourseOptions/CourseOptions";
 import { CourseActionTypes } from "../reducers/CourseReducers";
 import { toast } from "react-toastify"
 
+
+/*
 const courseGenUrl = 'http://localhost:8084/'
 const lessonContentUrl = 'http://localhost:8080/'
 const welcomeUrl = 'http://localhost:8082/'
+*/
+
+const courseGenUrl = 'https://us-central1-socratiq.cloudfunctions.net/create_course_plan'
+const lessonContentUrl = 'https://us-central1-socratiq.cloudfunctions.net/process_lesson_data'
+const welcomeUrl = 'https://us-central1-socratiq.cloudfunctions.net/welcome_with_plan'
+
 
 export const generateFirstCoursePlan = (
     courseOptions: CourseOptions
