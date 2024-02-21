@@ -18,7 +18,7 @@ function DataDisplayPage() {
   const [inputKey, setInputKey] = useState(Date.now());
 
 
-  const { courseOptions, courseContent, detailedCoursePlan, progressStatus, isCourseLoading } = useAppSelector(state => state.courseReducer);
+  const { courseOptions, courseContent, detailedCoursePlan, progressStatus, isCourseLoading } = useAppSelector(state => state.course);
   const [background, setBackground] = useState('');
   const [purposeOfLearning, setpurposeOfLearning] = useState('');
   const [durationInHours, setdurationInHours] = useState('');

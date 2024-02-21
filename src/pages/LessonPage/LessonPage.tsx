@@ -16,7 +16,7 @@ import ExplainOptions from './ExplainOptions';
 function DataDisplayPage() {
   const dispatch = useDispatch()
 
-  const { courseOptions, courseContent, detailedCoursePlan, progressStatus, isCourseLoading } = useAppSelector(state => state.courseReducer);
+  const { courseOptions, courseContent, detailedCoursePlan, progressStatus, isCourseLoading } = useAppSelector(state => state.course);
 
   
   const [selectionState, setSelectionState] = useState({

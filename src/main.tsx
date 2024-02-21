@@ -16,7 +16,7 @@ function Main() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/search" element={<CourseFirstPage />} />
+        <Route path="/" element={<CourseFirstPage />} />
         <Route path="/lesson" element={<LessonPage />} />
         <Route path="/welcome" element={<WelcomePage />} />
       </Routes>

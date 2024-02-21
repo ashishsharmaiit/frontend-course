@@ -24,7 +24,7 @@ export class MessageDto {
 }
 
 export function QueryResolver() {
-    const { progressStatus, courseContent } = useAppSelector(state => state.courseReducer);
+    const { progressStatus, courseContent } = useAppSelector(state => state.course);
 
     const [messageInput, setMessageInput] = useState("")
 
