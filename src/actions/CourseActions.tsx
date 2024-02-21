@@ -171,5 +171,4 @@ export const updateCourseOptions = (options: Partial<CourseOptions>) => ({
 });
 
 
-
 // If newProgressStatus could be another type, replace `number` with the appropriate type

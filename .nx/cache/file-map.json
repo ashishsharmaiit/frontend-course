@@ -14,6 +14,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.2",
     "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.21.1",
     "react-toastify": "^10.0.3",
@@ -35,12 +36,24 @@
   "fileMap": {
     "nonProjectFiles": [
       {
+        "file": "src/actions/CourseActions.tsx",
+        "hash": "16109802107762977010"
+      },
+      {
         "file": "src/pages/LessonPage/LessonPage.tsx",
-        "hash": "13166667557161412050"
+        "hash": "9601294330671756489"
+      },
+      {
+        "file": "src/pages/CoursePage/CourseFirstPage.tsx",
+        "hash": "16870433534684135065"
       },
       {
         "file": "src/containers/QueryResolver/QueryResolver.tsx",
-        "hash": "3452884105080302928"
+        "hash": "12685188107493258702"
+      },
+      {
+        "file": "src/pages/LessonPage/ExplainOptions.tsx",
+        "hash": "9577431648741970136"
       }
     ],
     "projectFileMap": {
@@ -67,11 +80,11 @@
         },
         {
           "file": "package-lock.json",
-          "hash": "7054660373576665839"
+          "hash": "17969128067727323364"
         },
         {
           "file": "package.json",
-          "hash": "6355677624022176669",
+          "hash": "13993396817483485433",
           "deps": [
             "npm:@emotion/react",
             "npm:@emotion/styled",
@@ -85,6 +98,7 @@
             "npm:react",
             "npm:react-bootstrap",
             "npm:react-dom",
+            "npm:react-markdown",
             "npm:react-redux",
             "npm:react-router-dom",
             "npm:react-toastify",
@@ -103,12 +117,8 @@
           ]
         },
         {
-          "file": "public/Chapter10Logo.png",
-          "hash": "10301520188915848632"
-        },
-        {
           "file": "src/actions/CourseActions.tsx",
-          "hash": "6928671848398517813"
+          "hash": "8730882311989856291"
         },
         {
           "file": "src/components/AddButton/AddButton.tsx",
@@ -123,6 +133,10 @@
           "hash": "3955185884299496289"
         },
         {
+          "file": "src/components/CloseButton/CloseButton.tsx",
+          "hash": "5786385811974061926"
+        },
+        {
           "file": "src/components/DynamicList/DynamicList.tsx",
           "hash": "18256181712373877886"
         },
@@ -135,56 +149,36 @@
           "hash": "18446465297269373682"
         },
         {
-          "file": "src/containers/CustomizeCourse/CoursePlan.tsx",
-          "hash": "12055687572423568076"
-        },
-        {
-          "file": "src/containers/CustomizeCourse/CourseStyle.ts",
-          "hash": "9096708360998176084"
-        },
-        {
-          "file": "src/containers/CustomizeCourse/CustomizeCourse.tsx",
-          "hash": "10062816304006255918"
-        },
-        {
           "file": "src/containers/QueryResolver/QueryResolver.tsx",
-          "hash": "14061209514181027535"
+          "hash": "12685188107493258702"
         },
         {
           "file": "src/main.tsx",
-          "hash": "17078914124545735425"
+          "hash": "14009559822903591498"
         },
         {
           "file": "src/models/CourseOptions/CourseData.ts",
-          "hash": "13032579885718225209"
+          "hash": "10083128330566900975"
         },
         {
           "file": "src/models/CourseOptions/CourseOptions.ts",
-          "hash": "1371814694061887187"
+          "hash": "9729554404755925900"
         },
         {
           "file": "src/pages/CoursePage/CourseFirstPage.tsx",
-          "hash": "9532587268930243306"
-        },
-        {
-          "file": "src/pages/CoursePage/CoursePage.tsx",
-          "hash": "8135733296759509432"
+          "hash": "3761706613033484589"
         },
         {
           "file": "src/pages/LessonPage/LessonPage.tsx",
-          "hash": "5135337101559913929"
-        },
-        {
-          "file": "src/pages/LessonPage/courseData.json",
-          "hash": "11649042752145110441"
+          "hash": "17884693882546375991"
         },
         {
           "file": "src/pages/WelcomePage/WelcomePage.tsx",
-          "hash": "13922755782994869150"
+          "hash": "4373920701534095985"
         },
         {
           "file": "src/reducers/CourseReducers.ts",
-          "hash": "9122173713737838290"
+          "hash": "4703476899381988843"
         },
         {
           "file": "src/reducers/index.ts",

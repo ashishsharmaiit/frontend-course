@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import {
     Box,
+    Fab,
     TextField,
     Typography,
     Grid,
     Paper,
     IconButton,
+    Stack
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useAppSelector } from '../../store';
+import CloseButton from '../../components/CloseButton/CloseButton';
 
 export class MessageDto {
     isUser: boolean;
@@ -28,6 +31,12 @@ export function QueryResolver() {
     const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
     const [messages, setMessages] = useState<Array<MessageDto>>(new Array<MessageDto>());
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => setOpen(true);
+
+    const handleClose = () => setOpen(false);
 
     const createNewMessage = (content: string, isUser: boolean) => {
         const newMessage = new MessageDto(isUser, content);
@@ -74,68 +83,90 @@ export function QueryResolver() {
     };
 
     return (
-        <Box
-          sx={{
-            border: 0.1,
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            borderRadius: "10px",
-            bgcolor: "#F9F9F9",
-          }}
-        >
-          <Box sx={{ borderBottom: 0.1, p: 2, backgroundColor: "#F9F9F9", borderRadius: "10px 10px 0px 0px"}}>
-            <Typography gutterBottom component="div" sx={{
-                    color: "#000",
-                    fontSize: "21px",
-                    fontWeight: "400",
-                    paddingLeft: "8px"
-                }}>
-                Query Resolver
-            </Typography>
-          </Box>
-          <Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
-            {messages.map((message, index) => (
-              <Message key={index} message={message} />
-            ))}
-          </Box>
-          <Box sx={{ borderTop: 0.1, p: 2, backgroundColor: "#F9F9F9", borderRadius: "0px 0px 10px 10px"}}>
-            <Grid container spacing={2}>
-              <Grid item xs={10}>
-                <TextField
-                  size="small"
-                  fullWidth
-                  placeholder="Ask your query here"
-                  variant="standard"
-                  value={messageInput}
-                  InputProps={{ disableUnderline: true }}
-                  onChange={(e) => setMessageInput(e.target.value)} 
-                  disabled={isWaiting}
-                  sx={{
-                    fontSize: "20px",
-                    bgcolor: "#E1E1E1",
-                    borderRadius: "10px",
-                    marginLeft: "2px",
-                    paddingLeft: "8px",
-                    paddingRight: "2px"
-                }}/>
-              </Grid>
-              <Grid item xs={2}>
-                <IconButton
-                    color="primary"
-                    onClick={sendMessage} 
-                    disabled={isWaiting}
-                >
-                    <SendIcon style={{
-                        color: "#0072EF", 
-                        fontSize: "27px", 
-                        fontWeight: "700"}}>
-                    </SendIcon>
-                </IconButton>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
+        <div>
+            {!open && (<Fab onClick={handleOpen} variant="extended" sx={{
+                position: 'absolute',
+                bottom: 16,
+                right: 16,
+            }}>
+                Ask AI
+            </Fab>)}
+            {open && (
+                <Box
+                    sx={{
+                        border: 0.1,
+                        height: "80vh",
+                        width: "40vh",
+                        display: "flex",
+                        flexDirection: "column",
+                        borderRadius: "10px",
+                        bgcolor: "#F9F9F9",
+                        position: 'absolute',
+                        bottom: 16,
+                        right: 16,
+                    }}
+                    >
+                    <Box sx={{ 
+                        borderBottom: 0.1, 
+                        p: 2, 
+                        backgroundColor: "#F9F9F9", 
+                        borderRadius: "10px 10px 0px 0px"}}>
+                        <Stack direction="row" justifyContent="space-between">
+                            <Typography gutterBottom component="div" sx={{
+                                    color: "#000",
+                                    fontSize: "21px",
+                                    fontWeight: "400",
+                                    paddingLeft: "8px"
+                                }}>
+                                Query Resolver
+                            </Typography>
+                            <CloseButton height={"21px"} width={"21px"} onClick={handleClose}></CloseButton>
+                        </Stack>
+                    </Box>
+                    <Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
+                        {messages.map((message, index) => (
+                        <Message key={index} message={message} />
+                        ))}
+                    </Box>
+                    <Box sx={{ borderTop: 0.1, p: 2, backgroundColor: "#F9F9F9", borderRadius: "0px 0px 10px 10px"}}>
+                        <Grid container spacing={2}>
+                        <Grid item xs={10}>
+                            <TextField
+                            size="small"
+                            fullWidth
+                            placeholder="Ask your query here"
+                            variant="standard"
+                            value={messageInput}
+                            InputProps={{ disableUnderline: true }}
+                            onChange={(e) => setMessageInput(e.target.value)} 
+                            disabled={isWaiting}
+                            sx={{
+                                fontSize: "20px",
+                                bgcolor: "#E1E1E1",
+                                borderRadius: "10px",
+                                marginLeft: "2px",
+                                paddingLeft: "8px",
+                                paddingRight: "2px"
+                            }}/>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <IconButton
+                                color="primary"
+                                onClick={sendMessage} 
+                                disabled={isWaiting}
+                            >
+                                <SendIcon style={{
+                                    color: "#0072EF", 
+                                    fontSize: "27px", 
+                                    fontWeight: "700"}}>
+                                </SendIcon>
+                            </IconButton>
+                        </Grid>
+                        </Grid>
+                    </Box>
+                </Box>
+            )}
+        </div>
       );
 };
 

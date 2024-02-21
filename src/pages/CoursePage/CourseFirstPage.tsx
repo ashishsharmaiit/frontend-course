@@ -21,7 +21,7 @@ const SearchBar = ({setSearchQuery} : {setSearchQuery: (courseOptions: CourseOpt
     const handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         setSearchQuery({ topic: topic });
-        }
+    }
 
     return <form onSubmit={handleFormSubmit}>
         <TextField
