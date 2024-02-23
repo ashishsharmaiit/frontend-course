@@ -18,7 +18,7 @@ function DataDisplayPage() {
 
   const { courseOptions, courseContent, detailedCoursePlan, progressStatus, isCourseLoading } = useAppSelector(state => state.course);
 
-  
+
   const [selectionState, setSelectionState] = useState({
     isDirty: false,
     selection: '',
@@ -48,7 +48,12 @@ function DataDisplayPage() {
   });
 
   useEffect(() => {
-    const handleClick = () => setClicked(false);
+    const handleClick = () => {
+        setClicked(false);
+        if (explanationModalOpen) {
+            setExplanationModalOpen(false);
+        }
+    };
     window.addEventListener("click", handleClick);
     return () => {
       window.removeEventListener("click", handleClick);

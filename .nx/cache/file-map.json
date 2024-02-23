@@ -36,24 +36,20 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "src/actions/CourseActions.tsx",
-        "hash": "16109802107762977010"
-      },
-      {
         "file": "src/pages/LessonPage/LessonPage.tsx",
-        "hash": "9601294330671756489"
+        "hash": "1685870570847929737"
       },
       {
-        "file": "src/pages/CoursePage/CourseFirstPage.tsx",
-        "hash": "16870433534684135065"
+        "file": "src/main.tsx",
+        "hash": "14271680116926779039"
       },
       {
-        "file": "src/containers/QueryResolver/QueryResolver.tsx",
-        "hash": "12685188107493258702"
+        "file": ".nx/cache/d/server-process.json",
+        "hash": "10105354891256362230"
       },
       {
-        "file": "src/pages/LessonPage/ExplainOptions.tsx",
-        "hash": "9577431648741970136"
+        "file": "src/pages/LoginPage/LoginPage.tsx",
+        "hash": "6507277759413842063"
       }
     ],
     "projectFileMap": {
@@ -118,7 +114,11 @@
         },
         {
           "file": "src/actions/CourseActions.tsx",
-          "hash": "8730882311989856291"
+          "hash": "16109802107762977010"
+        },
+        {
+          "file": "src/actions/LoginActions.tsx",
+          "hash": "10852787219081626272"
         },
         {
           "file": "src/components/AddButton/AddButton.tsx",
@@ -150,11 +150,11 @@
         },
         {
           "file": "src/containers/QueryResolver/QueryResolver.tsx",
-          "hash": "12685188107493258702"
+          "hash": "14063673794927526362"
         },
         {
           "file": "src/main.tsx",
-          "hash": "14009559822903591498"
+          "hash": "14271680116926779039"
         },
         {
           "file": "src/models/CourseOptions/CourseData.ts",
@@ -166,27 +166,39 @@
         },
         {
           "file": "src/pages/CoursePage/CourseFirstPage.tsx",
-          "hash": "3761706613033484589"
+          "hash": "16870433534684135065"
+        },
+        {
+          "file": "src/pages/LessonPage/ExplainOptions.tsx",
+          "hash": "9577431648741970136"
         },
         {
           "file": "src/pages/LessonPage/LessonPage.tsx",
-          "hash": "17884693882546375991"
+          "hash": "15039873280789526877"
+        },
+        {
+          "file": "src/pages/LoginPage/LoginPage.tsx",
+          "hash": "5280392734017859005"
         },
         {
           "file": "src/pages/WelcomePage/WelcomePage.tsx",
-          "hash": "4373920701534095985"
+          "hash": "13328102354302262701"
         },
         {
           "file": "src/reducers/CourseReducers.ts",
           "hash": "4703476899381988843"
         },
         {
+          "file": "src/reducers/LoginReducers.ts",
+          "hash": "2436968327027605110"
+        },
+        {
           "file": "src/reducers/index.ts",
-          "hash": "1006165253569780824"
+          "hash": "5804784002218327825"
         },
         {
           "file": "src/store.tsx",
-          "hash": "18220038584375413477"
+          "hash": "9260026735034001660"
         },
         {
           "file": "src/vite-env.d.ts",
