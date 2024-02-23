@@ -5,14 +5,17 @@ import { toast } from "react-toastify"
 
 
 /*
-const courseGenUrl = 'http://localhost:8084/'
-const lessonContentUrl = 'http://localhost:8080/'
-const welcomeUrl = 'http://localhost:8082/'
-*/
-
+const welcomeUrl = 'https://us-central1-socratiq.cloudfunctions.net/welcome_with_plan'
 const courseGenUrl = 'https://us-central1-socratiq.cloudfunctions.net/create_course_plan'
 const lessonContentUrl = 'https://us-central1-socratiq.cloudfunctions.net/process_lesson_data'
-const welcomeUrl = 'https://us-central1-socratiq.cloudfunctions.net/welcome_with_plan'
+
+*/
+
+const welcomeUrl = 'http://localhost:8081/'
+const courseGenUrl = 'http://localhost:8083/'
+const lessonContentUrl = 'http://localhost:8082/'
+
+
 
 
 export const generateFirstCoursePlan = (
